@@ -5,3 +5,36 @@
 body {
   background-color: #f0f0f0;
 }
+
+.scrolldown-btn svg path.first-path {
+  animation: scrollanim 1s ease-in-out infinite;
+  animation-delay: 0.8s;
+}
+
+.scrolldown-btn svg path.second-path {
+  animation: scrollanim2 1s ease-in-out infinite;
+}
+
+/* Keyframes for the first path */
+@keyframes scrollanim {
+  0% {
+    transform: translate(0, -40px);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(0, 0);
+    opacity: 0.8;
+  }
+}
+
+/* Keyframes for the second path */
+@keyframes scrollanim2 {
+  0% {
+    transform: translate(0, -40px);
+    opacity: 0;
+  }
+  60% {
+    transform: translate(0, 0);
+    opacity: 0.6;
+  }
+}

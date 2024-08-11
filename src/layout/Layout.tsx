@@ -6,7 +6,7 @@ import { FaUser } from "react-icons/fa";
 // bg-[#F7F9FC]
 export default function Layout() {
   return (
-    <div className="max-w-sm bg-[#F7F9FC] mx-auto h-[92vh]">
+    <div className="max-w-sm bg-[#F7F9FC] mx-auto min-h-[92vh] pb-[8vh]">
       <Outlet />
 
       <ul className="items-center text-[12px] max-w-sm mx-auto flex justify-between fixed bottom-0 left-0 right-0 px-10 bg-[#f8f8f8] h-[8vh]">
