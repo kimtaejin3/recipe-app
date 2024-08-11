@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useState } from "react";
 import { FaCameraRetro } from "react-icons/fa6";
 import ScrollBtn from "../components/ScrollBtn";
+import Ingredient from "../components/Ingredient";
 
 export default function AddByHand() {
-  const [step, setStep] = useState(5);
+  const [step, setStep] = useState(1);
+  const [ingredientCount, setIngredientCount] = useState(1);
 
   const handleStepUpClick = () => {
     setStep((prevStep) => prevStep + 1);
@@ -100,30 +103,26 @@ export default function AddByHand() {
                 재료가 남거나 부족하지 않도록 정확한 계량정보를 적어주세요.
               </p>
             </div>
-            <div className="mt-4">
-              <input className="w-full p-2" type="text" placeholder="재료" />
-              <div className="mt-4 flex flex-col gap-2">
-                <input
-                  className="w-full p-2"
-                  type="text"
-                  placeholder="예) 돼지고기"
-                />
-                <input
-                  className="w-full p-2"
-                  type="text"
-                  placeholder="10 (수량)"
-                />
-                <input
-                  className="w-full p-2"
-                  type="text"
-                  placeholder="예) g, ml"
-                />
-                <input
-                  className="w-full p-2"
-                  type="text"
-                  placeholder="예) 비고"
-                />
-              </div>
+            {new Array(ingredientCount).fill(0).map((_, index) => {
+              return <Ingredient count={index + 1} />;
+            })}
+            <div className="flex gap-4 mt-4">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIngredientCount((ingredientCount) => ingredientCount + 1);
+                }}
+              >
+                재료묶음 추가
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIngredientCount((ingredientCount) => ingredientCount - 1);
+                }}
+              >
+                재료묶음 제거
+              </button>
             </div>
           </div>
         )}
