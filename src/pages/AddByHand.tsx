@@ -3,7 +3,7 @@ import { FaCameraRetro } from "react-icons/fa6";
 import ScrollBtn from "../components/ScrollBtn";
 
 export default function AddByHand() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(5);
 
   const handleStepUpClick = () => {
     setStep((prevStep) => prevStep + 1);
@@ -88,6 +88,42 @@ export default function AddByHand() {
                 <option>고급</option>
                 <option>신의경지</option>
               </select>
+            </div>
+          </div>
+        )}
+
+        {step > 4 && (
+          <div className="mt-4">
+            <div>
+              <label>재료정보</label>
+              <p className="mt-2 text-[12px] text-gray-500">
+                재료가 남거나 부족하지 않도록 정확한 계량정보를 적어주세요.
+              </p>
+            </div>
+            <div className="mt-4">
+              <input className="w-full p-2" type="text" placeholder="재료" />
+              <div className="mt-4 flex flex-col gap-2">
+                <input
+                  className="w-full p-2"
+                  type="text"
+                  placeholder="예) 돼지고기"
+                />
+                <input
+                  className="w-full p-2"
+                  type="text"
+                  placeholder="10 (수량)"
+                />
+                <input
+                  className="w-full p-2"
+                  type="text"
+                  placeholder="예) g, ml"
+                />
+                <input
+                  className="w-full p-2"
+                  type="text"
+                  placeholder="예) 비고"
+                />
+              </div>
             </div>
           </div>
         )}
