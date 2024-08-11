@@ -12,29 +12,29 @@ export default function Home() {
         </h1>
       </div>
 
-      <div>
-        <button className="block">
+      <div className="flex flex-col justify-center gap-10 mt-14 items-center">
+        <button>
           <Link
             to="/"
-            className="w-[181px] h-[119px] p-[40px] border-2 border-[#EB3830] rounded-[20px] bg-white"
+            className="w-[181px] h-[15vh] border-2 border-[#EB3830] rounded-[20px] bg-white flex items-center justify-center"
           >
-            Youtube로 가져오기
+            <span>Youtube로 가져오기</span>
           </Link>
         </button>
-        <button className="block">
+        <button>
           <Link
             to="/edit"
-            className="w-[181px] h-[119px] p-[40px] border-2 border-[#EB3830] rounded-[20px] bg-white"
+            className="w-[181px] h-[15vh] border-2 border-[#EB3830] rounded-[20px] bg-white flex items-center justify-center"
           >
-            직접 메모하기
+            <span>직접 메모하기</span>
           </Link>
         </button>
-        <button className="block">
+        <button>
           <Link
             to="/"
-            className="w-[181px] h-[119px] p-[40px] border-2 border-[#EB3830] rounded-[20px] bg-white"
+            className="w-[181px] h-[15vh] border-2 border-[#EB3830] rounded-[20px] bg-white flex items-center justify-center"
           >
-            Website에서 가져오기
+            <span>Website에서 가져오기</span>
           </Link>
         </button>
       </div>
