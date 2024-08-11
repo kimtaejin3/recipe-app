@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Edit from "./pages/Edit";
 import Layout from "./layout/Layout";
+import AddByHand from "./pages/AddByHand";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/edit" element={<Edit />} />
+          <Route path="/add-byhand" element={<AddByHand />} />
         </Route>
       </Routes>
     </BrowserRouter>

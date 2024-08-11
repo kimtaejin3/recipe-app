@@ -23,10 +23,10 @@ export default function Home() {
         </button>
         <button>
           <Link
-            to="/edit"
+            to="/add-byhand"
             className="w-[181px] h-[15vh] border-2 border-[#EB3830] rounded-[20px] bg-white flex items-center justify-center"
           >
-            <span>직접 메모하기</span>
+            <span>직접 작성하기</span>
           </Link>
         </button>
         <button>
