@@ -151,17 +151,28 @@ export default function AddByHand() {
             </div>
           </div>
         )}
+        {step > 6 && (
+          <div className="mt-4">
+            <label className="block">요리팁</label>
+            <textarea className="w-full p-2 outline-none rounded-md mt-2  focus:outline-[#f2766f] transition-all duration-300"></textarea>
+          </div>
+        )}
+        {step > 7 && (
+          <div className="mt-4">
+            <button className="bg-[#ea3930] text-white p-2 rounded-md">
+              레시피 저장
+            </button>
+          </div>
+        )}
       </form>
-      <div className="flex gap-7 mt-4">
-        <button className="flex gap-2" onClick={handleStepUpClick}>
-          <span>완료 했어요!</span>
-          <ScrollBtn />
-        </button>
-        <button className="flex gap-2" onClick={handleStepUpClick}>
-          <span>넘어갈래요!</span>
-          <ScrollBtn />
-        </button>
-      </div>
+      {step < 8 && (
+        <div className="flex gap-7 mt-4">
+          <button className="flex gap-2" onClick={handleStepUpClick}>
+            <span>완료 했어요!</span>
+            <ScrollBtn />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
