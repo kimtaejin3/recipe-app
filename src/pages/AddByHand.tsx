@@ -3,10 +3,12 @@ import { useState } from "react";
 import { FaCameraRetro } from "react-icons/fa6";
 import ScrollBtn from "../components/ScrollBtn";
 import Ingredient from "../components/Ingredient";
+import Recipe from "../components/Recipe";
 
 export default function AddByHand() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(2);
   const [ingredientCount, setIngredientCount] = useState(1);
+  const [recipeCount, setRecipeCount] = useState(1);
 
   const handleStepUpClick = () => {
     setStep((prevStep) => prevStep + 1);
@@ -36,7 +38,7 @@ export default function AddByHand() {
         )}
 
         {step > 1 && (
-          <div className="mt-4">
+          <div className="mt-4 bounce-short">
             <label className="block">레시피 제목</label>
             <input
               className="w-full p-2 rounded-md mt-2 border-none outline-none focus:outline-[#f2766f] transition-all duration-300"
@@ -48,7 +50,7 @@ export default function AddByHand() {
         {step > 2 && (
           <div className="mt-4">
             <label className="block">요리소개</label>
-            <textarea className="w-full p-2 outline-none rounded-md resize-none mt-2  focus:outline-[#f2766f] transition-all duration-300"></textarea>
+            <textarea className="w-full p-2 outline-none rounded-md mt-2  focus:outline-[#f2766f] transition-all duration-300"></textarea>
           </div>
         )}
 
@@ -122,6 +124,29 @@ export default function AddByHand() {
                 }}
               >
                 재료묶음 제거
+              </button>
+            </div>
+          </div>
+        )}
+        {step > 5 && (
+          <div className="mt-4">
+            <div>
+              <label>요리순서</label>
+              <p className="mt-2 text-[12px] text-gray-500">
+                요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.
+              </p>
+            </div>
+            {new Array(recipeCount).fill(0).map((_, index) => {
+              return <Recipe count={index + 1} />;
+            })}
+            <div className="flex gap-4 mt-4">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setRecipeCount((recipeCount) => recipeCount + 1);
+                }}
+              >
+                순서추가
               </button>
             </div>
           </div>
