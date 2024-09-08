@@ -6,7 +6,7 @@ import Ingredient from "../components/Ingredient";
 import Recipe from "../components/Recipe";
 
 export default function AddByHand() {
-  const [step, setStep] = useState(2);
+  const [step, setStep] = useState(1);
   const [ingredientCount, setIngredientCount] = useState(1);
   const [recipeCount, setRecipeCount] = useState(1);
 
@@ -157,7 +157,7 @@ export default function AddByHand() {
             <textarea className="w-full p-2 outline-none rounded-md mt-2  focus:outline-[#f2766f] transition-all duration-300"></textarea>
           </div>
         )}
-        {step > 7 && (
+        {step > 6 && (
           <div className="mt-4">
             <button className="bg-[#ea3930] text-white p-2 rounded-md">
               레시피 저장
@@ -165,7 +165,7 @@ export default function AddByHand() {
           </div>
         )}
       </form>
-      {step < 8 && (
+      {step < 7 && (
         <div className="flex gap-7 mt-4">
           <button className="flex gap-2" onClick={handleStepUpClick}>
             <span>완료 했어요!</span>
