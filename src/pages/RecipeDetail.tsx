@@ -15,7 +15,7 @@ export default function RecipeDetail() {
         <img src={Food} alt="food" />
       </div>
       <div className="p-3">
-        <div className="flex justify-between text-[13px] pt-4 items-center">
+        <div className="flex justify-between text-[13px] pt-4 items-center sticky top-0 bg-[#f6f9fc] pb-2">
           <div className="text-[#ea4e30]">레시피 소개</div>
           <div className="w-8 h-[2px]  border-t-2 border-[#ea4e30] border-dotted"></div>
           <div>재료정보</div>
@@ -144,6 +144,13 @@ export default function RecipeDetail() {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="mt-8">
+            <h2 className="text-[18px] font-semibold mb-2">요리팁</h2>
+            <p>
+              튀김을 익힐때 처음부터 너무 쎈온도로 하게되면 맛이 없어집니다.
+            </p>
           </div>
         </div>
       </div>

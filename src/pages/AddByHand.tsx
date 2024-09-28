@@ -5,6 +5,17 @@ import ScrollBtn from "../components/ScrollBtn";
 import Ingredient from "../components/Ingredient";
 import Recipe from "../components/Recipe";
 
+const DEFAULT_RCIPE = {
+  title: "",
+  content: "",
+  info: {
+    amount: "",
+    time: "",
+    difficulty: "",
+  },
+  ingredients: [{}],
+};
+
 export default function AddByHand() {
   const [step, setStep] = useState(1);
   const [ingredientCount, setIngredientCount] = useState(1);
@@ -96,7 +107,6 @@ export default function AddByHand() {
             </div>
           </div>
         )}
-
         {step > 4 && (
           <div className="mt-4">
             <div>
