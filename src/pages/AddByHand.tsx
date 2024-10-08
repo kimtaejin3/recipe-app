@@ -16,6 +16,7 @@ const DEFAULT_RCIPE = {
   ingredients: [{}],
 };
 
+
 export default function AddByHand() {
   const [step, setStep] = useState(1);
   const [ingredientCount, setIngredientCount] = useState(1);
@@ -125,7 +126,7 @@ export default function AddByHand() {
                   setIngredientCount((ingredientCount) => ingredientCount + 1);
                 }}
               >
-                재료묶음 추가
+                재료 추가
               </button>
               <button
                 onClick={(e) => {
@@ -133,7 +134,7 @@ export default function AddByHand() {
                   setIngredientCount((ingredientCount) => ingredientCount - 1);
                 }}
               >
-                재료묶음 제거
+                재료 제거
               </button>
             </div>
           </div>
