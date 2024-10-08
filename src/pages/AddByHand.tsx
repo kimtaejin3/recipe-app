@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { FaCameraRetro } from "react-icons/fa6";
 import ScrollBtn from "../components/ScrollBtn";
 import Ingredient from "../components/Ingredient";
@@ -28,9 +28,18 @@ export default function AddByHand() {
     setStep((prevStep) => prevStep + 1);
   };
 
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    console.log("hi");
+  };
+
+  const handleChange = (e: ChangeEvent) => {
+    console.log(e);
+  };
+
   return (
     <div className="p-5">
-      <div className="flex gap-5 ">
+      <div className="flex gap-5">
         <h1
           style={{ color: "#EB3830", fontSize: "19px" }}
           className=" font-semibold"
@@ -38,7 +47,7 @@ export default function AddByHand() {
           레시피 직접 작성하기
         </h1>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         {step > 0 && (
           <div className="mt-4">
             <button className="block mt-7 mb-10 mx-auto w-[150px] h-[150px] bg-slate-300 rounded-md">
@@ -58,13 +67,17 @@ export default function AddByHand() {
               className="w-full p-2 rounded-md mt-2 border-none outline-none focus:outline-[#f2766f] transition-all duration-300"
               type="text"
               placeholder="예) 소고기 미역국 끓이기"
+              onChange={handleChange}
             />
           </div>
         )}
         {step > 2 && (
           <div className="mt-4">
             <label className="block">요리소개</label>
-            <textarea className="w-full p-2 outline-none rounded-md mt-2  focus:outline-[#f2766f] transition-all duration-300"></textarea>
+            <textarea
+              onChange={handleChange}
+              className="w-full p-2 outline-none rounded-md mt-2  focus:outline-[#f2766f] transition-all duration-300"
+            ></textarea>
           </div>
         )}
 
@@ -72,8 +85,11 @@ export default function AddByHand() {
           <div className="mt-4">
             <label>요리정보</label>
             <div className="flex gap-4 mt-2">
-              <label className="items-center basis-16">인원</label>
-              <select className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300">
+              <label className="items-center basis-20">인원</label>
+              <select
+                onChange={handleChange}
+                className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
+              >
                 <option>인원</option>
                 <option>1인분</option>
                 <option>2인분</option>
@@ -84,8 +100,11 @@ export default function AddByHand() {
               </select>
             </div>
             <div className="flex gap-4 my-4">
-              <label className="items-center basis-16">시간</label>
-              <select className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300">
+              <label className="items-center basis-20">시간</label>
+              <select
+                onChange={handleChange}
+                className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
+              >
                 <option>시간</option>
                 <option>5분 이내</option>
                 <option>10분 이내</option>
@@ -99,13 +118,29 @@ export default function AddByHand() {
               </select>
             </div>
             <div className="flex gap-4">
-              <label className="basis-16">난이도</label>
-              <select className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300">
+              <label className="basis-20">난이도</label>
+              <select
+                onChange={handleChange}
+                className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
+              >
                 <option>난이도</option>
                 <option>초급</option>
                 <option>중급</option>
                 <option>고급</option>
                 <option>신의경지</option>
+              </select>
+            </div>
+
+            <div className="flex gap-4 mt-4 items-center">
+              <label className="basis-20">카테고리</label>
+              <select
+                onChange={handleChange}
+                className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
+              >
+                <option>카테고리</option>
+                <option>한식</option>
+                <option>중식</option>
+                <option>일식</option>
               </select>
             </div>
           </div>
@@ -132,8 +167,9 @@ export default function AddByHand() {
             {new Array(recipeCount).fill(0).map((_, index) => {
               return <Recipe count={index + 1} />;
             })}
-            <div className="flex gap-4 mt-4">
+            <div className="flex gap-4 mt-4 ">
               <button
+                className="bg-[#f2766f] text-white rounded-md px-6 py-1 text-[13px]"
                 onClick={(e) => {
                   e.preventDefault();
                   setRecipeCount((recipeCount) => recipeCount + 1);
@@ -147,7 +183,10 @@ export default function AddByHand() {
         {step > 6 && (
           <div className="mt-4">
             <label className="block">요리팁</label>
-            <textarea className="w-full p-2 outline-none rounded-md mt-2  focus:outline-[#f2766f] transition-all duration-300"></textarea>
+            <textarea
+              onChange={handleChange}
+              className="w-full p-2 outline-none rounded-md mt-2  focus:outline-[#f2766f] transition-all duration-300"
+            ></textarea>
           </div>
         )}
         {step > 6 && (

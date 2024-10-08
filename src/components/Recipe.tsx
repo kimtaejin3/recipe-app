@@ -1,4 +1,4 @@
-import { FaPlus } from "react-icons/fa";
+import { FaCameraRetro } from "react-icons/fa6";
 
 export default function Recipe({ count }: { count: number }) {
   return (
@@ -7,7 +7,7 @@ export default function Recipe({ count }: { count: number }) {
       <div className="flex gap-2">
         <textarea className="m-0 w-full p-2 rounded-md border-none outline-none focus:outline-[#f2766f] transition-all duration-300" />
         <div className="w-[100px] bg-[#cbd5e1] rounded-md flex justify-center items-center cursor-pointer">
-          <FaPlus color="#aaa" />
+          <FaCameraRetro color="#aaa" />
         </div>
       </div>
     </div>
