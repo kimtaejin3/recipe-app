@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function Ingredient({ count }: { count: number }) {
+export default function Ingredient() {
   const [cnt, setCnt] = useState(1);
 
   return (

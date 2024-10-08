@@ -6,20 +6,22 @@ import Ingredient from "../components/Ingredient";
 import Recipe from "../components/Recipe";
 
 const DEFAULT_RCIPE = {
-  title: "",
-  content: "",
-  info: {
-    amount: "",
-    time: "",
-    difficulty: "",
-  },
+  recipeTitle: "",
+  recipeContent: "",
+  recipeImage: "",
+  recipeMainImage: "",
+  categoryId: 1,
+  recipeAmount: "",
+  recipeTime: "",
+  recipeDifficulty: "",
+  recipeTip: "",
   ingredients: [{}],
+  steps: [{}],
+  spices: [{}],
 };
-
 
 export default function AddByHand() {
   const [step, setStep] = useState(1);
-  const [ingredientCount, setIngredientCount] = useState(1);
   const [recipeCount, setRecipeCount] = useState(1);
 
   const handleStepUpClick = () => {
@@ -116,27 +118,7 @@ export default function AddByHand() {
                 재료가 남거나 부족하지 않도록 정확한 계량정보를 적어주세요.
               </p>
             </div>
-            {new Array(ingredientCount).fill(0).map((_, index) => {
-              return <Ingredient count={index + 1} />;
-            })}
-            <div className="flex gap-4 mt-4">
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIngredientCount((ingredientCount) => ingredientCount + 1);
-                }}
-              >
-                재료 추가
-              </button>
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  setIngredientCount((ingredientCount) => ingredientCount - 1);
-                }}
-              >
-                재료 제거
-              </button>
-            </div>
+            <Ingredient />
           </div>
         )}
         {step > 5 && (
