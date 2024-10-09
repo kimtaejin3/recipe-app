@@ -4,6 +4,7 @@ import { FaCameraRetro } from "react-icons/fa6";
 import ScrollBtn from "../components/ScrollBtn";
 import Ingredient from "../components/Ingredient";
 import Recipe from "../components/Recipe";
+import Saurce from "../components/Saurce";
 
 const DEFAULT_RCIPE = {
   recipeTitle: "",
@@ -20,9 +21,19 @@ const DEFAULT_RCIPE = {
   spices: [{}],
 };
 
+export type Ingredients = {
+  ingredientName: string;
+  ingredientQuantity: string;
+};
+
 export default function AddByHand() {
   const [step, setStep] = useState(1);
   const [recipeCount, setRecipeCount] = useState(1);
+  const [recipe, setRecipe] = useState(DEFAULT_RCIPE);
+  const [ingredientCount, setIngredientCount] = useState(1);
+  const [saurceCount, setSaurceCount] = useState(1);
+
+  const [ingredients, setIngredients] = useState<Ingredients[]>([]);
 
   const handleStepUpClick = () => {
     setStep((prevStep) => prevStep + 1);
@@ -30,11 +41,22 @@ export default function AddByHand() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log("hi");
+    console.log(recipe);
+    console.log(ingredients);
   };
 
-  const handleChange = (e: ChangeEvent) => {
-    console.log(e);
+  const handleChange = (name: string, value: string | number) => {
+    setRecipe({
+      ...recipe,
+      [name]: value,
+    });
+  };
+
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    handleChange(name, value);
   };
 
   return (
@@ -67,7 +89,8 @@ export default function AddByHand() {
               className="w-full p-2 rounded-md mt-2 border-none outline-none focus:outline-[#f2766f] transition-all duration-300"
               type="text"
               placeholder="예) 소고기 미역국 끓이기"
-              onChange={handleChange}
+              name="recipeTitle"
+              onChange={handleInputChange}
             />
           </div>
         )}
@@ -75,7 +98,8 @@ export default function AddByHand() {
           <div className="mt-4">
             <label className="block">요리소개</label>
             <textarea
-              onChange={handleChange}
+              name="recipeContent"
+              onChange={handleInputChange}
               className="w-full p-2 outline-none rounded-md mt-2  focus:outline-[#f2766f] transition-all duration-300"
             ></textarea>
           </div>
@@ -87,7 +111,9 @@ export default function AddByHand() {
             <div className="flex gap-4 mt-2">
               <label className="items-center basis-20">인원</label>
               <select
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange("recipeAmount", e.target.value);
+                }}
                 className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
               >
                 <option>인원</option>
@@ -102,7 +128,9 @@ export default function AddByHand() {
             <div className="flex gap-4 my-4">
               <label className="items-center basis-20">시간</label>
               <select
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange("recipeTime", e.target.value);
+                }}
                 className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
               >
                 <option>시간</option>
@@ -120,7 +148,9 @@ export default function AddByHand() {
             <div className="flex gap-4">
               <label className="basis-20">난이도</label>
               <select
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange("recipeDifficulty", e.target.value);
+                }}
                 className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
               >
                 <option>난이도</option>
@@ -134,7 +164,15 @@ export default function AddByHand() {
             <div className="flex gap-4 mt-4 items-center">
               <label className="basis-20">카테고리</label>
               <select
-                onChange={handleChange}
+                onChange={(e) => {
+                  if (e.target.value === "한식") {
+                    handleChange("categoryId", 0);
+                  } else if (e.target.value === "중식") {
+                    handleChange("categoryId", 1);
+                  } else {
+                    handleChange("categoryId", 2);
+                  }
+                }}
                 className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
               >
                 <option>카테고리</option>
@@ -153,10 +191,85 @@ export default function AddByHand() {
                 재료가 남거나 부족하지 않도록 정확한 계량정보를 적어주세요.
               </p>
             </div>
-            <Ingredient />
+            {new Array(ingredientCount).fill(0).map((_, index) => (
+              <div
+                className={`mt-4 pb-2 ${
+                  ingredientCount > 1 &&
+                  index != ingredientCount - 1 &&
+                  "border-b-2 pb-5"
+                }`}
+              >
+                <Ingredient onSetIngredients={setIngredients} />
+              </div>
+            ))}
+            <div className="flex gap-2">
+              <button
+                className="bg-[#f2766f] text-white mt-2 rounded-md px-6"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIngredientCount((prevCnt) => prevCnt + 1);
+                }}
+              >
+                +
+              </button>
+              <button
+                className="bg-[#f2766f] text-white mt-2 rounded-md px-6"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (ingredientCount > 1) {
+                    setIngredientCount((prevCnt) => prevCnt - 1);
+                  }
+                }}
+              >
+                -
+              </button>
+            </div>
           </div>
         )}
         {step > 5 && (
+          <div className="mt-4">
+            <div>
+              <label>양념정보</label>
+              <p className="mt-2 text-[12px] text-gray-500">
+                너무 달거나 짜지 않도록 정확한 양을 입력해주세요!
+              </p>
+            </div>
+            {new Array(saurceCount).fill(0).map((_, index) => (
+              <div
+                className={`mt-4 pb-2 ${
+                  saurceCount > 1 &&
+                  index != saurceCount - 1 &&
+                  "border-b-2 pb-5"
+                }`}
+              >
+                <Saurce />
+              </div>
+            ))}
+            <div className="flex gap-2">
+              <button
+                className="bg-[#f2766f] text-white mt-2 rounded-md px-6"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSaurceCount((prevCnt) => prevCnt + 1);
+                }}
+              >
+                +
+              </button>
+              <button
+                className="bg-[#f2766f] text-white mt-2 rounded-md px-6"
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (saurceCount > 1) {
+                    setSaurceCount((prevCnt) => prevCnt - 1);
+                  }
+                }}
+              >
+                -
+              </button>
+            </div>
+          </div>
+        )}
+        {step > 6 && (
           <div className="mt-4">
             <div>
               <label>요리순서</label>
@@ -184,7 +297,8 @@ export default function AddByHand() {
           <div className="mt-4">
             <label className="block">요리팁</label>
             <textarea
-              onChange={handleChange}
+              name="recipeTip"
+              onChange={handleInputChange}
               className="w-full p-2 outline-none rounded-md mt-2  focus:outline-[#f2766f] transition-all duration-300"
             ></textarea>
           </div>
