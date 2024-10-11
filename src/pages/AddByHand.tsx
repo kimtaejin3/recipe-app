@@ -16,14 +16,25 @@ const DEFAULT_RCIPE = {
   recipeTime: "",
   recipeDifficulty: "",
   recipeTip: "",
-  ingredients: [{}],
-  steps: [{}],
-  spices: [{}],
+  // ingredients: [{}],
+  // steps: [{}],
+  // spices: [{}],
 };
 
 export type Ingredients = {
   ingredientName: string;
   ingredientQuantity: string;
+};
+
+export type Sauce = {
+  spiceName: string;
+  spiceQuantity: string;
+};
+
+export type Step = {
+  stepContent: string;
+  stepImage: string;
+  stepOrder: number;
 };
 
 export default function AddByHand() {
@@ -34,6 +45,8 @@ export default function AddByHand() {
   const [saurceCount, setSaurceCount] = useState(1);
 
   const [ingredients, setIngredients] = useState<Ingredients[]>([]);
+  const [sauces, setSauces] = useState<Sauce[]>([]);
+  const [recipeSteps, setRecipeSteps] = useState<Step[]>([]);
 
   const handleStepUpClick = () => {
     setStep((prevStep) => prevStep + 1);
@@ -41,8 +54,10 @@ export default function AddByHand() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
+
     console.log(recipe);
     console.log(ingredients);
+    console.log(sauces);
   };
 
   const handleChange = (name: string, value: string | number) => {
@@ -242,7 +257,7 @@ export default function AddByHand() {
                   "border-b-2 pb-5"
                 }`}
               >
-                <Saurce />
+                <Saurce onSetSauce={setSauces} />
               </div>
             ))}
             <div className="flex gap-2">
@@ -278,7 +293,7 @@ export default function AddByHand() {
               </p>
             </div>
             {new Array(recipeCount).fill(0).map((_, index) => {
-              return <Recipe count={index + 1} />;
+              return <Recipe onSetStep={setRecipeSteps} count={index + 1} />;
             })}
             <div className="flex gap-4 mt-4 ">
               <button
