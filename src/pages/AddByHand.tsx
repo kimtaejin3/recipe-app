@@ -13,7 +13,7 @@ const DEFAULT_RCIPE = {
   recipeContent: "",
   recipeImage: "",
   recipeMainImage: "",
-  categoryId: 1,
+  categoryId: 0,
   recipeAmount: "",
   recipeTime: "",
   recipeDifficulty: "",
@@ -97,13 +97,47 @@ export default function AddByHand() {
     setStep((prevStep) => prevStep + 1);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-
     console.log(recipe);
     console.log(ingredients);
     console.log(sauces);
     console.log(recipeSteps);
+    if (
+      !recipe.recipeTitle ||
+      !recipe.categoryId ||
+      !recipe.recipeAmount ||
+      !recipe.recipeContent ||
+      !recipe.recipeDifficulty ||
+      !recipe.recipeImage ||
+      !recipe.recipeMainImage ||
+      !recipe.recipeTime ||
+      ingredients.length == 0 ||
+      recipeSteps.length === 0
+    ) {
+      alert("양념정보와 요리팁을 제외한 모든 필드를 입력해야 합니다!");
+      return;
+    }
+
+    try {
+      await fetch("/api/recipe/manual", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...recipe,
+          categoryId: Number(recipe.categoryId),
+          ingredients,
+          spices: [...sauces],
+          steps: [...recipeSteps],
+          memberId: 2,
+          url: "",
+        }),
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const handleChange = (name: string, value: string | number) => {
@@ -135,7 +169,7 @@ export default function AddByHand() {
       <form onSubmit={handleSubmit}>
         {step > 0 && (
           <div className="mt-4">
-            <button className="block mt-7 mb-10 mx-auto w-[150px] h-[150px] bg-slate-300 rounded-md">
+            <div className="block mt-7 mb-10 mx-auto w-[150px] h-[150px] bg-slate-300 rounded-md overflow-hidden">
               <label
                 htmlFor="mainImage"
                 className=" text-[13px] flex flex-col items-center justify-center gap-3 cursor-pointer relative w-full h-full overflow-hidden"
@@ -163,7 +197,7 @@ export default function AddByHand() {
                 hidden
                 id="mainImage"
               />
-            </button>
+            </div>
           </div>
         )}
 
@@ -251,11 +285,14 @@ export default function AddByHand() {
               <select
                 onChange={(e) => {
                   if (e.target.value === "한식") {
-                    handleChange("categoryId", 0);
+                    console.log(1);
+                    handleChange("categoryId", "1");
                   } else if (e.target.value === "중식") {
-                    handleChange("categoryId", 1);
+                    console.log(2);
+                    handleChange("categoryId", "2");
                   } else {
-                    handleChange("categoryId", 2);
+                    console.log(3);
+                    handleChange("categoryId", "3");
                   }
                 }}
                 className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"

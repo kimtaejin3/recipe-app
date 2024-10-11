@@ -100,7 +100,7 @@ export default function Recipe({
             {
               stepContent: content,
               stepImage: url,
-              stepOrder: count,
+              stepOrder: count - 1,
             },
           ]);
         }}
