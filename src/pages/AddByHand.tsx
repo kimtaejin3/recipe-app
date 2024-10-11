@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { FaCameraRetro } from "react-icons/fa6";
 import ScrollBtn from "../components/ScrollBtn";
 import Ingredient from "../components/Ingredient";
 import Recipe from "../components/Recipe";
 import Saurce from "../components/Saurce";
+import { storage } from "../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const DEFAULT_RCIPE = {
   recipeTitle: "",
@@ -48,6 +50,49 @@ export default function AddByHand() {
   const [sauces, setSauces] = useState<Sauce[]>([]);
   const [recipeSteps, setRecipeSteps] = useState<Step[]>([]);
 
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [preview, setPreview] = useState("");
+
+  const handleGetImageUrl = async () => {
+    const profileImgUrl = await handleImgSubmit();
+    return profileImgUrl;
+  };
+
+  const handleImgSubmit = () => {
+    if (!imageFile) return;
+    const storageRef = ref(storage, `files/${imageFile!.name}`);
+    const uploadTask = uploadBytes(storageRef, imageFile);
+
+    return uploadTask.then((snapshot) => {
+      return getDownloadURL(snapshot.ref).then((downloadUrl) => {
+        return downloadUrl;
+      });
+    });
+  };
+
+  useEffect(() => {
+    if (!imageFile) return;
+    const nextPreview = URL.createObjectURL(imageFile);
+    setPreview(nextPreview);
+
+    return () => {
+      URL.revokeObjectURL(nextPreview);
+      setPreview("");
+    };
+  }, [imageFile]);
+
+  useEffect(() => {
+    if (!imageFile) return;
+
+    (async () => {
+      const url = await handleGetImageUrl();
+      console.log(url);
+      if (!url) return;
+      handleChange("recipeMainImage", url);
+      handleChange("recipeImage", url);
+    })();
+  }, [imageFile]);
+
   const handleStepUpClick = () => {
     setStep((prevStep) => prevStep + 1);
   };
@@ -58,13 +103,16 @@ export default function AddByHand() {
     console.log(recipe);
     console.log(ingredients);
     console.log(sauces);
+    console.log(recipeSteps);
   };
 
   const handleChange = (name: string, value: string | number) => {
-    setRecipe({
-      ...recipe,
-      [name]: value,
-    });
+    // setRecipe((prev)=>{
+    //   ...prev,
+    //   [name]: value,
+    // });
+
+    setRecipe((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleInputChange = (
@@ -88,11 +136,33 @@ export default function AddByHand() {
         {step > 0 && (
           <div className="mt-4">
             <button className="block mt-7 mb-10 mx-auto w-[150px] h-[150px] bg-slate-300 rounded-md">
-              <div className=" text-[13px] flex flex-col items-center justify-center gap-3">
-                <FaCameraRetro size={40} />
-                요리 대표 사진을
-                <br /> 등록해 주세요.
-              </div>
+              <label
+                htmlFor="mainImage"
+                className=" text-[13px] flex flex-col items-center justify-center gap-3 cursor-pointer relative w-full h-full overflow-hidden"
+              >
+                {!preview && (
+                  <>
+                    <FaCameraRetro size={40} />
+                    요리 대표 사진을
+                    <br /> 등록해 주세요.
+                  </>
+                )}
+                {preview && (
+                  <img
+                    src={preview}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                )}
+              </label>
+              <input
+                onChange={(e) => {
+                  if (!e.target.files) return;
+                  setImageFile(e.target.files[0]);
+                }}
+                type="file"
+                hidden
+                id="mainImage"
+              />
             </button>
           </div>
         )}
