@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import AddByHand from "./pages/AddByHand";
 import RecipeDetail from "./pages/RecipeDetail";
+import AddByWebsite from "./pages/AddByWebsite";
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/add-byhand" element={<AddByHand />} />
+          <Route path="/add-by-hand" element={<AddByHand />} />
+          <Route path="/add-by-website" element={<AddByWebsite />} />
           <Route path="/recipe" element={<RecipeDetail />} />
         </Route>
       </Routes>

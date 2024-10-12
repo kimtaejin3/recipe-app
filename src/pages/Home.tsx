@@ -23,7 +23,7 @@ export default function Home() {
         </button>
         <button>
           <Link
-            to="/add-byhand"
+            to="/add-by-hand"
             className="w-[181px] h-[15vh] border-2 border-[#EB3830] rounded-[20px] bg-white flex items-center justify-center"
           >
             <span>직접 작성하기</span>
@@ -31,7 +31,7 @@ export default function Home() {
         </button>
         <button>
           <Link
-            to="/"
+            to="/add-by-website"
             className="w-[181px] h-[15vh] border-2 border-[#EB3830] rounded-[20px] bg-white flex items-center justify-center"
           >
             <span>Website에서 가져오기</span>
