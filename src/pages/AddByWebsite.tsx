@@ -116,7 +116,7 @@ export default function AddByWebsite() {
           style={{ color: "#EB3830", fontSize: "19px" }}
           className=" font-semibold"
         >
-          레시피 직접 작성하기
+          레시피 웹에서 불러오기
         </h1>
       </div>
       <form onSubmit={handleSubmit}>
