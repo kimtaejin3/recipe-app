@@ -182,6 +182,7 @@ export default function AddByWebsite() {
           <textarea
             name="recipeContent"
             onChange={handleInputChange}
+            defaultValue={preRecipe?.recipeContent}
             className="w-full p-2 outline-none rounded-md mt-2  focus:outline-[#f2766f] transition-all duration-300"
           ></textarea>
         </div>
