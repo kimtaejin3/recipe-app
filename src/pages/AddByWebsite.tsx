@@ -5,6 +5,11 @@ import Ingredient from "../components/Ingredient";
 import Saurce from "../components/Saurce";
 import Recipe from "../components/Recipe";
 
+type Ingredient = {
+  ingredientName: string;
+  ingredientQuantity: string;
+};
+
 const DEFAULT_RCIPE = {
   recipeTitle: "",
   recipeContent: "",
@@ -15,9 +20,9 @@ const DEFAULT_RCIPE = {
   recipeTime: "",
   recipeDifficulty: "",
   recipeTip: "",
-  // ingredients: [{}],
-  // steps: [{}],
-  // spices: [{}],
+  ingredients: [{} as Ingredient],
+  steps: [{} as Step],
+  spices: [{}],
 };
 
 export default function AddByWebsite() {
@@ -107,6 +112,8 @@ export default function AddByWebsite() {
 
     setPreRecipe(res);
     setLoading(false);
+    setIngredientCount(res.ingredients.length);
+    setRecipeCount(res.steps.length);
   };
 
   return (
@@ -166,6 +173,7 @@ export default function AddByWebsite() {
             type="text"
             placeholder="예) 소고기 미역국 끓이기"
             name="recipeTitle"
+            value={preRecipe?.recipeTitle}
             onChange={handleInputChange}
           />
         </div>
@@ -264,7 +272,7 @@ export default function AddByWebsite() {
               재료가 남거나 부족하지 않도록 정확한 계량정보를 적어주세요.
             </p>
           </div>
-          {new Array(ingredientCount).fill(0).map((_, index) => (
+          {preRecipe?.ingredients.map((ingredient, index) => (
             <div
               className={`mt-4 pb-2 ${
                 ingredientCount > 1 &&
@@ -272,7 +280,11 @@ export default function AddByWebsite() {
                 "border-b-2 pb-5"
               }`}
             >
-              <Ingredient onSetIngredients={setIngredients} />
+              <Ingredient
+                init_name={ingredient.ingredientName}
+                init_quantity={ingredient.ingredientQuantity}
+                onSetIngredients={setIngredients}
+              />
             </div>
           ))}
           <div className="flex gap-2">
@@ -344,8 +356,15 @@ export default function AddByWebsite() {
               요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.
             </p>
           </div>
-          {new Array(recipeCount).fill(0).map((_, index) => {
-            return <Recipe onSetStep={setRecipeSteps} count={index + 1} />;
+          {preRecipe?.steps.map((step, index) => {
+            return (
+              <Recipe
+                init_content={step.stepContent}
+                init_image={step.stepImage}
+                onSetStep={setRecipeSteps}
+                count={index + 1}
+              />
+            );
           })}
           <div className="flex gap-4 mt-4 ">
             <button

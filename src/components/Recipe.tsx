@@ -1,51 +1,20 @@
 import { FaCameraRetro } from "react-icons/fa6";
 import { Step } from "../pages/AddByHand";
-import { useEffect, useState } from "react";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { storage } from "../firebase";
+import { useState } from "react";
 
 export default function Recipe({
+  init_content,
+  init_image,
   count,
   onSetStep,
 }: {
   count: number;
+  init_image?: string;
+  init_content?: string;
   onSetStep: React.Dispatch<React.SetStateAction<Step[]>>;
 }) {
-  const [content, setContent] = useState("");
-  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [content, setContent] = useState(init_content ? init_content : "");
   const [isClicked, setIsClicked] = useState(false);
-  const [preview, setPreview] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleGetImageUrl = async () => {
-    setLoading(true);
-    const profileImgUrl = await handleImgSubmit();
-    return profileImgUrl;
-  };
-
-  const handleImgSubmit = () => {
-    if (!imageFile) return;
-    const storageRef = ref(storage, `files/${imageFile!.name}`);
-    const uploadTask = uploadBytes(storageRef, imageFile);
-
-    return uploadTask.then((snapshot) => {
-      return getDownloadURL(snapshot.ref).then((downloadUrl) => {
-        setLoading(false);
-        return downloadUrl;
-      });
-    });
-  };
-
-  useEffect(() => {
-    if (!imageFile) return;
-    const nextPreview = URL.createObjectURL(imageFile);
-    setPreview(nextPreview);
-
-    return () => {
-      URL.revokeObjectURL(nextPreview);
-      setPreview("");
-    };
-  }, [imageFile]);
 
   return (
     <div className="mt-4">
@@ -54,6 +23,7 @@ export default function Recipe({
         <textarea
           onChange={(e) => setContent(e.target.value)}
           disabled={isClicked}
+          value={init_content}
           className="m-0 w-full p-2 rounded-md border-none outline-none focus:outline-[#f2766f] transition-all duration-300"
         />
         <label
@@ -61,20 +31,10 @@ export default function Recipe({
           htmlFor={`image${count}`}
         >
           <FaCameraRetro color="#aaa" />
-          {preview && (
-            <img src={preview} className=" absolute inset-0 w-full h-full" />
+          {init_image && (
+            <img src={init_image} className=" absolute inset-0 w-full h-full" />
           )}
         </label>
-        <input
-          onChange={(e) => {
-            if (!e.target.files) return;
-            setImageFile(e.target.files[0]);
-          }}
-          disabled={isClicked}
-          hidden
-          id={`image${count}`}
-          type="file"
-        />
       </div>
       <button
         onClick={async (e) => {
@@ -83,23 +43,13 @@ export default function Recipe({
             alert("레시피를 입력해주세요!");
             return;
           }
-          if (!imageFile) {
-            alert("이미지를 넣어주세요!");
-            return;
-          }
-
-          const url = await handleGetImageUrl();
-          if (url === undefined) {
-            alert("실패");
-            return;
-          }
 
           setIsClicked(true);
           onSetStep((prev) => [
             ...prev,
             {
               stepContent: content,
-              stepImage: url,
+              stepImage: init_image as string,
               stepOrder: count - 1,
             },
           ]);
@@ -107,7 +57,7 @@ export default function Recipe({
         disabled={isClicked}
         className="bg-[#cbd5e1] mt-4 py-1 px-4 text-[12px] rounded-md"
       >
-        확인 {loading && <span>loading...</span>}
+        확인
       </button>
     </div>
   );

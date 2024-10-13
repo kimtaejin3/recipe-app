@@ -2,14 +2,17 @@ import { useState } from "react";
 import { Ingredients } from "../pages/AddByHand";
 
 export default function Ingredient({
+  init_name,
+  init_quantity,
   onSetIngredients,
 }: {
+  init_name?: string;
+  init_quantity?: string;
   onSetIngredients: React.Dispatch<React.SetStateAction<Ingredients[]>>;
 }) {
   const [isClicked, setIsClicked] = useState(false);
-  const [name, setName] = useState("");
-  const [quantityY, setQuantityY] = useState("");
-  const [quantityG, setQuantityG] = useState("");
+  const [name, setName] = useState(init_name ? init_name : "");
+  const [quantity, setQuantity] = useState(init_quantity ? init_quantity : "");
 
   return (
     <>
@@ -18,6 +21,7 @@ export default function Ingredient({
         type="text"
         disabled={isClicked}
         onChange={(e) => setName(e.target.value)}
+        value={name}
         placeholder={`재료 이름`}
       />
       <div className="mt-4 flex flex-col gap-2">
@@ -25,15 +29,9 @@ export default function Ingredient({
           className="w-full p-2 rounded-md mt-2 border-none outline-none focus:outline-[#f2766f] transition-all duration-300"
           type="text"
           disabled={isClicked}
-          onChange={(e) => setQuantityY(e.target.value)}
-          placeholder="예) 10 (수량)"
-        />
-        <input
-          className="w-full p-2 rounded-md mt-2 border-none outline-none focus:outline-[#f2766f] transition-all duration-300"
-          type="text"
-          disabled={isClicked}
-          onChange={(e) => setQuantityG(e.target.value)}
-          placeholder="예) g, ml"
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+          placeholder="예) 10 (수량, g, ml)"
         />
       </div>
       <div>
@@ -45,12 +43,8 @@ export default function Ingredient({
               alert("재료명을 입력해주세요!");
               return;
             }
-            if (quantityY === "" && quantityG === "") {
+            if (quantity === "") {
               alert("양을 입력해주세요!");
-              return;
-            }
-            if (quantityY !== "" && quantityG !== "") {
-              alert("양은 1개의 단위로만 입력해야 합니다");
               return;
             }
 
@@ -59,7 +53,7 @@ export default function Ingredient({
               ...prev,
               {
                 ingredientName: name,
-                ingredientQuantity: quantityY !== "" ? quantityY : quantityG,
+                ingredientQuantity: quantity,
               },
             ]);
           }}
