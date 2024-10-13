@@ -195,15 +195,46 @@ export default function AddByWebsite() {
               onChange={(e) => {
                 handleChange("recipeAmount", e.target.value);
               }}
+              defaultValue={preRecipe?.recipeAmount}
               className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
             >
               <option>인원</option>
-              <option>1인분</option>
-              <option>2인분</option>
-              <option>3인분</option>
-              <option>4인분</option>
-              <option>5인분</option>
-              <option>6인분 이상</option>
+              <option
+                selected={preRecipe?.recipeAmount === "1인분"}
+                value="1인분"
+              >
+                1인분
+              </option>
+              <option
+                selected={preRecipe?.recipeAmount === "2인분"}
+                value="2인분"
+              >
+                2인분
+              </option>
+              <option
+                selected={preRecipe?.recipeAmount === "3인분"}
+                value="3인분"
+              >
+                3인분
+              </option>
+              <option
+                selected={preRecipe?.recipeAmount === "4인분"}
+                value="4인분"
+              >
+                4인분
+              </option>
+              <option
+                selected={preRecipe?.recipeAmount === "5인분"}
+                value="5인분"
+              >
+                5인분
+              </option>
+              <option
+                selected={preRecipe?.recipeAmount === "6인분 이상"}
+                value="6인분 이상"
+              >
+                6인분 이상
+              </option>
             </select>
           </div>
           <div className="flex gap-4 my-4">
@@ -215,15 +246,33 @@ export default function AddByWebsite() {
               className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
             >
               <option>시간</option>
-              <option>5분 이내</option>
-              <option>10분 이내</option>
-              <option>15분 이내</option>
-              <option>20분 이내</option>
-              <option>30분 이내</option>
-              <option>60분 이내</option>
-              <option>90분 이내</option>
-              <option>2시간 이내</option>
-              <option>2시간 이상</option>
+              <option selected={preRecipe?.recipeTime === "5분 이내"}>
+                5분 이내
+              </option>
+              <option selected={preRecipe?.recipeTime === "10분 이내"}>
+                10분 이내
+              </option>
+              <option selected={preRecipe?.recipeTime === "15분 이내"}>
+                15분 이내
+              </option>
+              <option selected={preRecipe?.recipeTime === "20분 이내"}>
+                20분 이내
+              </option>
+              <option selected={preRecipe?.recipeTime === "30분 이내"}>
+                30분 이내
+              </option>
+              <option selected={preRecipe?.recipeTime === "60분 이내"}>
+                60분 이내
+              </option>
+              <option selected={preRecipe?.recipeTime === "90분 이내"}>
+                90분 이내
+              </option>
+              <option selected={preRecipe?.recipeTime === "2시간 이내"}>
+                2시간 이내
+              </option>
+              <option selected={preRecipe?.recipeTime === "2시간 이상"}>
+                2시간 이상
+              </option>
             </select>
           </div>
           <div className="flex gap-4">
@@ -235,10 +284,21 @@ export default function AddByWebsite() {
               className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
             >
               <option>난이도</option>
-              <option>초급</option>
-              <option>중급</option>
-              <option>고급</option>
-              <option>신의경지</option>
+              <option selected={preRecipe?.recipeDifficulty === "아무나"}>
+                아무나
+              </option>
+              <option selected={preRecipe?.recipeDifficulty === "초급"}>
+                초급
+              </option>
+              <option selected={preRecipe?.recipeDifficulty === "중급"}>
+                중급
+              </option>
+              <option selected={preRecipe?.recipeDifficulty === "고급"}>
+                고급
+              </option>
+              <option selected={preRecipe?.recipeDifficulty === "신의경지"}>
+                신의경지
+              </option>
             </select>
           </div>
 
