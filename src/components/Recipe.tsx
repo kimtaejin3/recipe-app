@@ -23,7 +23,7 @@ export default function Recipe({
         <textarea
           onChange={(e) => setContent(e.target.value)}
           disabled={isClicked}
-          value={init_content}
+          defaultValue={init_content}
           className="m-0 w-full p-2 rounded-md border-none outline-none focus:outline-[#f2766f] transition-all duration-300"
         />
         <label

@@ -35,34 +35,23 @@ export default function AddByWebsite() {
   const [sauces, setSauces] = useState<Sauce[]>([]);
   const [recipeSteps, setRecipeSteps] = useState<Step[]>([]);
 
-  const [preview, setPreview] = useState("");
+  // const [preview, setPreview] = useState("");
 
   //urls
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
 
   //preRecipe
-  const [preRecipe, setPreRecipe] = useState<typeof DEFAULT_RCIPE>();
+  // const [preRecipe, setPreRecipe] = useState<typeof DEFAULT_RCIPE>();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(recipe);
+    console.log("recipe:", recipe);
     console.log(ingredients);
     console.log(sauces);
     console.log(recipeSteps);
-    if (
-      !recipe.recipeTitle ||
-      !recipe.categoryId ||
-      !recipe.recipeAmount ||
-      !recipe.recipeContent ||
-      !recipe.recipeDifficulty ||
-      !recipe.recipeImage ||
-      !recipe.recipeMainImage ||
-      !recipe.recipeTime ||
-      ingredients.length == 0 ||
-      recipeSteps.length === 0
-    ) {
-      alert("양념정보와 요리팁을 제외한 모든 필드를 입력해야 합니다!");
+    if (!recipe.categoryId) {
+      alert("카테고리를 입력해주세요.");
       return;
     }
 
@@ -108,12 +97,33 @@ export default function AddByWebsite() {
     setLoading(true);
     const data = await fetch(`/api/recipe/website/crawl?memberId=2&url=${url}`);
     const res = await data.json();
-    console.log(res);
 
-    setPreRecipe(res);
+    console.log("res:", res);
     setLoading(false);
     setIngredientCount(res.ingredients.length);
     setRecipeCount(res.steps.length);
+
+    setRecipe((preValue) => ({
+      ...preValue,
+      recipeTitle: res.recipeTitle,
+      recipeContent: res.recipeContent,
+      recipeMainImage: res.recipeMainImage,
+      recipeImage: res.recipeImage,
+      recipeAmount: res.recipeAmount,
+      recipeTime: res.recipeTime,
+      recipeDifficulty: res.recipeDifficulty,
+      recipeTip: res.recipeTip,
+      categoryId: res.categoryId,
+    }));
+
+    setIngredients([...res.ingredients]);
+    setRecipeSteps(
+      res.steps.map((step, index) => ({
+        ...step,
+        recipeStepId: index + 1,
+      }))
+    );
+    setSauces([...res.spices]);
   };
 
   return (
@@ -130,14 +140,14 @@ export default function AddByWebsite() {
         <div className="mt-4">
           <div className="block mt-7 mb-10 mx-auto w-[150px] h-[150px] bg-slate-300 rounded-md overflow-hidden">
             <div className=" text-[13px] flex flex-col items-center justify-center gap-3 cursor-pointer relative w-full h-full overflow-hidden">
-              {!preRecipe?.recipeMainImage && (
+              {!recipe?.recipeMainImage && (
                 <>
                   <FaCameraRetro size={40} />
                 </>
               )}
-              {preRecipe?.recipeMainImage && (
+              {recipe?.recipeMainImage && (
                 <img
-                  src={preRecipe?.recipeMainImage}
+                  src={recipe?.recipeMainImage}
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               )}
@@ -173,7 +183,7 @@ export default function AddByWebsite() {
             type="text"
             placeholder="예) 소고기 미역국 끓이기"
             name="recipeTitle"
-            value={preRecipe?.recipeTitle}
+            defaultValue={recipe?.recipeTitle}
             onChange={handleInputChange}
           />
         </div>
@@ -182,7 +192,7 @@ export default function AddByWebsite() {
           <textarea
             name="recipeContent"
             onChange={handleInputChange}
-            defaultValue={preRecipe?.recipeContent}
+            defaultValue={recipe?.recipeContent}
             className="w-full p-2 outline-none rounded-md mt-2  focus:outline-[#f2766f] transition-all duration-300"
           ></textarea>
         </div>
@@ -195,42 +205,27 @@ export default function AddByWebsite() {
               onChange={(e) => {
                 handleChange("recipeAmount", e.target.value);
               }}
-              defaultValue={preRecipe?.recipeAmount}
+              defaultValue={recipe?.recipeAmount}
               className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
             >
               <option>인원</option>
-              <option
-                selected={preRecipe?.recipeAmount === "1인분"}
-                value="1인분"
-              >
+              <option selected={recipe?.recipeAmount === "1인분"} value="1인분">
                 1인분
               </option>
-              <option
-                selected={preRecipe?.recipeAmount === "2인분"}
-                value="2인분"
-              >
+              <option selected={recipe?.recipeAmount === "2인분"} value="2인분">
                 2인분
               </option>
-              <option
-                selected={preRecipe?.recipeAmount === "3인분"}
-                value="3인분"
-              >
+              <option selected={recipe?.recipeAmount === "3인분"} value="3인분">
                 3인분
               </option>
-              <option
-                selected={preRecipe?.recipeAmount === "4인분"}
-                value="4인분"
-              >
+              <option selected={recipe?.recipeAmount === "4인분"} value="4인분">
                 4인분
               </option>
-              <option
-                selected={preRecipe?.recipeAmount === "5인분"}
-                value="5인분"
-              >
+              <option selected={recipe?.recipeAmount === "5인분"} value="5인분">
                 5인분
               </option>
               <option
-                selected={preRecipe?.recipeAmount === "6인분 이상"}
+                selected={recipe?.recipeAmount === "6인분 이상"}
                 value="6인분 이상"
               >
                 6인분 이상
@@ -246,31 +241,31 @@ export default function AddByWebsite() {
               className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
             >
               <option>시간</option>
-              <option selected={preRecipe?.recipeTime === "5분 이내"}>
+              <option selected={recipe?.recipeTime === "5분 이내"}>
                 5분 이내
               </option>
-              <option selected={preRecipe?.recipeTime === "10분 이내"}>
+              <option selected={recipe?.recipeTime === "10분 이내"}>
                 10분 이내
               </option>
-              <option selected={preRecipe?.recipeTime === "15분 이내"}>
+              <option selected={recipe?.recipeTime === "15분 이내"}>
                 15분 이내
               </option>
-              <option selected={preRecipe?.recipeTime === "20분 이내"}>
+              <option selected={recipe?.recipeTime === "20분 이내"}>
                 20분 이내
               </option>
-              <option selected={preRecipe?.recipeTime === "30분 이내"}>
+              <option selected={recipe?.recipeTime === "30분 이내"}>
                 30분 이내
               </option>
-              <option selected={preRecipe?.recipeTime === "60분 이내"}>
+              <option selected={recipe?.recipeTime === "60분 이내"}>
                 60분 이내
               </option>
-              <option selected={preRecipe?.recipeTime === "90분 이내"}>
+              <option selected={recipe?.recipeTime === "90분 이내"}>
                 90분 이내
               </option>
-              <option selected={preRecipe?.recipeTime === "2시간 이내"}>
+              <option selected={recipe?.recipeTime === "2시간 이내"}>
                 2시간 이내
               </option>
-              <option selected={preRecipe?.recipeTime === "2시간 이상"}>
+              <option selected={recipe?.recipeTime === "2시간 이상"}>
                 2시간 이상
               </option>
             </select>
@@ -284,19 +279,19 @@ export default function AddByWebsite() {
               className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"
             >
               <option>난이도</option>
-              <option selected={preRecipe?.recipeDifficulty === "아무나"}>
+              <option selected={recipe?.recipeDifficulty === "아무나"}>
                 아무나
               </option>
-              <option selected={preRecipe?.recipeDifficulty === "초급"}>
+              <option selected={recipe?.recipeDifficulty === "초급"}>
                 초급
               </option>
-              <option selected={preRecipe?.recipeDifficulty === "중급"}>
+              <option selected={recipe?.recipeDifficulty === "중급"}>
                 중급
               </option>
-              <option selected={preRecipe?.recipeDifficulty === "고급"}>
+              <option selected={recipe?.recipeDifficulty === "고급"}>
                 고급
               </option>
-              <option selected={preRecipe?.recipeDifficulty === "신의경지"}>
+              <option selected={recipe?.recipeDifficulty === "신의경지"}>
                 신의경지
               </option>
             </select>
@@ -333,7 +328,7 @@ export default function AddByWebsite() {
               재료가 남거나 부족하지 않도록 정확한 계량정보를 적어주세요.
             </p>
           </div>
-          {preRecipe?.ingredients.map((ingredient, index) => (
+          {recipe?.ingredients.map((ingredient, index) => (
             <div
               className={`mt-4 pb-2 ${
                 ingredientCount > 1 &&
@@ -417,7 +412,7 @@ export default function AddByWebsite() {
               요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.
             </p>
           </div>
-          {preRecipe?.steps.map((step, index) => {
+          {recipe?.steps.map((step, index) => {
             return (
               <Recipe
                 init_content={step.stepContent}
