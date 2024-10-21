@@ -19,8 +19,17 @@ export default function Recipe() {
           <img className="w-full h-full object-cover" src={Food} alt="food" />
         </div>
       </div>
-      <div className="bg-[#F7F9FC] rounded-t-[20px] relative z-10 -top-7 p-3">
-        ...
+      <div className="bg-[#F7F9FC] rounded-t-[20px] relative z-10 -top-7 px-3">
+        <div className="py-4 flex justify-between">
+          <div className="flex gap-2">
+            <span>icon</span>
+            <span>카테고리</span>
+          </div>
+          <button>마이크</button>
+        </div>
+        <div>...</div>
+        <div>...</div>
+        <div>...</div>
       </div>
     </div>
   );
