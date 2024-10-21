@@ -59,7 +59,7 @@ export default function Recipe() {
         </ul>
 
         <div className="mt-[80px] flex items-center justify-center ">
-          <button className="bg-[#EB4F30] py-2 px-[50px] text-white rounded-md">
+          <button className="bg-[#EB4F30] rounded-[20px] py-2 px-[50px] text-white">
             다음단계
           </button>
         </div>
