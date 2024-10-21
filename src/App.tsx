@@ -2,8 +2,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Layout from "./layout/Layout";
 import AddByHand from "./pages/AddByHand";
-import RecipeDetail from "./pages/RecipeDetail";
 import AddByWebsite from "./pages/AddByWebsite";
+import RecipeDetail from "./pages/RecipeDetail";
 
 function App() {
   return (
