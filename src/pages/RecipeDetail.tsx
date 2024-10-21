@@ -2,6 +2,7 @@ import { GrFormPrevious } from "react-icons/gr";
 import Food from "../assets/foodCover.png";
 import PorkIcon from "../assets/pork.svg";
 import MikeIcon from "../assets/mike.svg";
+import Rating from "../assets/rating.svg";
 
 export default function Recipe() {
   return (
@@ -15,7 +16,7 @@ export default function Recipe() {
               </div>
             </div>
           </header>
-          <img className="w-full h-full object-cover" src={Food} alt="food" />
+          <img className="w-full h-full" src={Food} alt="food" />
         </div>
       </div>
       <div className="bg-[#F7F9FC] rounded-t-[20px] relative z-10 -top-7 px-5">
@@ -30,8 +31,14 @@ export default function Recipe() {
             <img src={MikeIcon} alt="mike_icon" />
           </button>
         </div>
-        <div>...</div>
-        <div>...</div>
+        <div>
+          <h1 className="text-[20px] font-bold">미역국</h1>
+          <img className="my-2" src={Rating} alt="임시 레이팅" />
+        </div>
+        <div>
+          미역국 끓이는 거 어렵지 않습니다! 집에서 쉽게 만들 수 있는 미역국!
+          가족, 친구 생일에 직접 끓여보세요~
+        </div>
         <div>...</div>
       </div>
     </div>
