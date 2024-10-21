@@ -57,6 +57,12 @@ export default function Recipe() {
             <span>2인분</span>
           </li>
         </ul>
+
+        <div className="mt-[80px] flex items-center justify-center ">
+          <button className="bg-[#EB4F30] py-2 px-[50px] text-white rounded-md">
+            다음단계
+          </button>
+        </div>
       </div>
     </div>
   );
