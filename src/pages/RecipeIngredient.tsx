@@ -1,3 +1,10 @@
 export default function RecipeIngredient() {
-  return <></>;
+  return (
+    <>
+      <div>
+        ...
+        <div>...</div>
+      </div>
+    </>
+  );
 }
