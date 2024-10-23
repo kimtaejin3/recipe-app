@@ -9,7 +9,7 @@ export default function Layout() {
     <div className="max-w-sm bg-[#F7F9FC] mx-auto min-h-[92vh] pb-[8vh]">
       <Outlet />
 
-      <ul className="items-center text-[12px] max-w-sm mx-auto flex justify-between fixed bottom-0 left-0 right-0 px-10 bg-[#f8f8f8] h-[8vh]">
+      <ul className="items-center text-[12px] z-[9999] max-w-sm mx-auto flex justify-between fixed bottom-0 left-0 right-0 px-10 bg-[#f8f8f8] h-[8vh]">
         <li>
           <Link to="/">
             <div className="text-[#EB4F30] flex flex-col items-center gap-1">
