@@ -1,7 +1,8 @@
 import { GrFormPrevious } from "react-icons/gr";
 import Food from "../assets/foodCover.png";
 // import RecipeInfo from "./RecipeInfo";
-import RecipeIngredient from "./RecipeIngredient";
+// import RecipeIngredient from "./RecipeIngredient";
+import RecipeSteps from "./RecipeSteps";
 
 export default function Recipe() {
   return (
@@ -20,7 +21,8 @@ export default function Recipe() {
       </div>
       <div className="bg-[#F7F9FC] rounded-t-[20px] relative z-10 -top-7 px-5">
         {/* <RecipeInfo /> */}
-        <RecipeIngredient />
+        {/* <RecipeIngredient /> */}
+        <RecipeSteps />
       </div>
     </div>
   );
