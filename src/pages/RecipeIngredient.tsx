@@ -1,10 +1,16 @@
 import { FaBasketShopping } from "react-icons/fa6";
+import MikeIcon from "../assets/mike.svg";
 
 export default function RecipeIngredient() {
   return (
     <>
       <div>
-        <h1 className=" text-center py-4 pb-8 font-bold text-[18px]">재료</h1>
+        <div className="py-4 pb-8 flex justify-between items-center">
+          <h1 className=" text-center font-bold text-[18px]">재료</h1>
+          <button>
+            <img src={MikeIcon} alt="mike_icon" />
+          </button>
+        </div>
         <ul className="flex flex-col gap-8">
           <li className="flex justify-between">
             <div className="flex items-center gap-2">
