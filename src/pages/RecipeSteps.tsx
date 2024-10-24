@@ -4,7 +4,7 @@ import { RecipeType, Step } from "./AddByHand";
 
 export default function RecipeSteps({ recipe }: { recipe: RecipeType }) {
   const [steps, setSteps] = useState<Step[]>();
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   console.log("renderint");
   console.log("in steps:", steps);
 
@@ -26,9 +26,9 @@ export default function RecipeSteps({ recipe }: { recipe: RecipeType }) {
             {steps?.map((el) => (
               <li
                 className={`bg-[#E4F0F2] w-5 h-5 flex items-center justify-center text-[12px] rounded-full cursor-pointer ${
-                  el.stepOrder == step && "bg-[#ea4e30] text-white"
+                  el.stepOrder - 1 == step && "bg-[#ea4e30] text-white"
                 }`}
-                onClick={() => setStep(el.stepOrder)}
+                onClick={() => setStep(el.stepOrder - 1)}
               >
                 {el.stepOrder}
               </li>
