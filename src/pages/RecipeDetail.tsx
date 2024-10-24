@@ -7,7 +7,7 @@ import RecipeSteps from "./RecipeSteps";
 
 export default function Recipe() {
   const [recipe, setRecipe] = useState({} as RecipeType);
-  const [page, setPage] = useState<"info" | "ingredient" | "step">("step");
+  const [page, setPage] = useState<"info" | "ingredient" | "step">("info");
 
   useEffect(() => {
     (async () => {
@@ -47,12 +47,34 @@ export default function Recipe() {
       </div>
 
       <div className="mt-[50px] flex items-center justify-center gap-4">
-        <button className="border-[#EB4F30] border-2 border-solid rounded-[20px] py-2 px-[50px]">
-          이전단계
-        </button>
-        <button className="bg-[#EB4F30] rounded-[20px] py-2 px-[50px] text-white">
-          다음단계
-        </button>
+        {page !== "info" && (
+          <button
+            className="border-[#EB4F30] border-2 border-solid rounded-[20px] py-2 px-[50px]"
+            onClick={() => {
+              if (page === "ingredient") {
+                setPage("info");
+              } else if (page === "step") {
+                setPage("ingredient");
+              }
+            }}
+          >
+            이전단계
+          </button>
+        )}
+        {page !== "step" && (
+          <button
+            className="bg-[#EB4F30] rounded-[20px] py-2 px-[50px] text-white"
+            onClick={() => {
+              if (page === "info") {
+                setPage("ingredient");
+              } else if (page === "ingredient") {
+                setPage("step");
+              }
+            }}
+          >
+            다음단계
+          </button>
+        )}
       </div>
     </div>
   );
