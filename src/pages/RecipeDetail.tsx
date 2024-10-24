@@ -23,8 +23,6 @@ export default function Recipe() {
     })();
   }, []);
 
-  console.log("in recipe:", recipe);
-
   return (
     <div className="pb-10">
       <div className="relative">
@@ -36,7 +34,11 @@ export default function Recipe() {
               </div>
             </div>
           </header>
-          <img className="w-full h-full" src={Food} alt="food" />
+          <img
+            className="w-full h-full"
+            src={recipe && recipe.recipeMainImage}
+            alt="food"
+          />
         </div>
       </div>
       <div className="bg-[#F7F9FC] rounded-t-[20px] relative z-10 -top-7 px-5">
