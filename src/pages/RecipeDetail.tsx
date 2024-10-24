@@ -1,7 +1,4 @@
 import { GrFormPrevious } from "react-icons/gr";
-import Food from "../assets/foodCover.png";
-// import RecipeInfo from "./RecipeInfo";
-// import RecipeIngredient from "./RecipeIngredient";
 import RecipeSteps from "./RecipeSteps";
 import { RecipeType } from "./AddByHand";
 import { useEffect, useState } from "react";
