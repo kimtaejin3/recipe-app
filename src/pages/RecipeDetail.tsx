@@ -1,12 +1,13 @@
 import { GrFormPrevious } from "react-icons/gr";
-// import RecipeSteps from "./RecipeSteps";
 import { RecipeType } from "./AddByHand";
 import { useEffect, useState } from "react";
-// import RecipeIngredient from "./RecipeIngredient";
 import RecipeInfo from "./RecipeInfo";
+import RecipeIngredient from "./RecipeIngredient";
+import RecipeSteps from "./RecipeSteps";
 
 export default function Recipe() {
   const [recipe, setRecipe] = useState({} as RecipeType);
+  const [page, setPage] = useState<"info" | "ingredient" | "step">("step");
 
   useEffect(() => {
     (async () => {
@@ -17,7 +18,6 @@ export default function Recipe() {
       });
 
       const { recipe } = await (res.json() as Promise<{ recipe: RecipeType }>);
-      console.log(recipe);
       setRecipe({ ...recipe });
     })();
   }, []);
@@ -41,9 +41,9 @@ export default function Recipe() {
         </div>
       </div>
       <div className="bg-[#F7F9FC] rounded-t-[20px] relative z-10 -top-7 px-5">
-        <RecipeInfo recipe={recipe} />
-        {/* <RecipeIngredient recipe={recipe} /> */}
-        {/* <RecipeSteps recipe={recipe} /> */}
+        {page === "info" && <RecipeInfo recipe={recipe} />}
+        {page === "ingredient" && <RecipeIngredient recipe={recipe} />}
+        {page === "step" && <RecipeSteps recipe={recipe} />}
       </div>
     </div>
   );
