@@ -1,7 +1,15 @@
 import { FaBasketShopping } from "react-icons/fa6";
 import MikeIcon from "../assets/mike.svg";
+import { Ingredients, RecipeType } from "./AddByHand";
+import { useEffect, useState } from "react";
 
-export default function RecipeIngredient() {
+export default function RecipeIngredient({ recipe }: { recipe: RecipeType }) {
+  const [ingredients, setIngredients] = useState<Ingredients[]>();
+
+  useEffect(() => {
+    setIngredients(recipe.ingredients);
+  }, [recipe]);
+
   return (
     <>
       <div>
@@ -12,48 +20,15 @@ export default function RecipeIngredient() {
           </button>
         </div>
         <ul className="flex flex-col gap-8">
-          <li className="flex justify-between">
-            <div className="flex items-center gap-2">
-              <FaBasketShopping color={"#ea4e30"} />
-              <span className="text-[17px]">미역</span>
-            </div>
-            <span>1/3컵 10g</span>
-          </li>
-          <li className="flex justify-between">
-            <div className="flex items-center gap-2">
-              <FaBasketShopping color={"#ea4e30"} />
-              <span className="text-[17px]">소고기 (양지)</span>
-            </div>
-            <span>1/3컵 10g</span>
-          </li>
-          <li className="flex justify-between">
-            <div className="flex items-center gap-2">
-              <FaBasketShopping color={"#ea4e30"} />
-              <span className="text-[17px]">참기름</span>
-            </div>
-            <span>1/3컵 10g</span>
-          </li>
-          <li className="flex justify-between">
-            <div className="flex items-center gap-2">
-              <FaBasketShopping color={"#ea4e30"} />
-              <span className="text-[17px]">국간장</span>
-            </div>
-            <span>1/3컵 10g</span>
-          </li>
-          <li className="flex justify-between">
-            <div className="flex items-center gap-2">
-              <FaBasketShopping color={"#ea4e30"} />
-              <span className="text-[17px]">다진마늘</span>
-            </div>
-            <span>1/3컵 10g</span>
-          </li>
-          <li className="flex justify-between">
-            <div className="flex items-center gap-2">
-              <FaBasketShopping color={"#ea4e30"} />
-              <span className="text-[17px]">멸치액젓</span>
-            </div>
-            <span>1/3컵 10g</span>
-          </li>
+          {ingredients?.map((ingredient) => (
+            <li className="flex justify-between">
+              <div className="flex items-center gap-2">
+                <FaBasketShopping color={"#ea4e30"} />
+                <span className="text-[17px]">{ingredient.ingredientName}</span>
+              </div>
+              <span>{ingredient.ingredientQuantity}</span>
+            </li>
+          ))}
         </ul>
 
         <div className="mt-[50px] flex items-center justify-center gap-4">

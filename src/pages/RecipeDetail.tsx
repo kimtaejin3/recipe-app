@@ -1,7 +1,8 @@
 import { GrFormPrevious } from "react-icons/gr";
-import RecipeSteps from "./RecipeSteps";
+// import RecipeSteps from "./RecipeSteps";
 import { RecipeType } from "./AddByHand";
 import { useEffect, useState } from "react";
+import RecipeIngredient from "./RecipeIngredient";
 
 export default function Recipe() {
   const [recipe, setRecipe] = useState({} as RecipeType);
@@ -40,8 +41,8 @@ export default function Recipe() {
       </div>
       <div className="bg-[#F7F9FC] rounded-t-[20px] relative z-10 -top-7 px-5">
         {/* <RecipeInfo /> */}
-        {/* <RecipeIngredient /> */}
-        <RecipeSteps recipe={recipe} />
+        <RecipeIngredient recipe={recipe} />
+        {/* <RecipeSteps recipe={recipe} /> */}
       </div>
     </div>
   );

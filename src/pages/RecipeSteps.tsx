@@ -5,8 +5,6 @@ import { RecipeType, Step } from "./AddByHand";
 export default function RecipeSteps({ recipe }: { recipe: RecipeType }) {
   const [steps, setSteps] = useState<Step[]>();
   const [step, setStep] = useState(0);
-  console.log("renderint");
-  console.log("in steps:", steps);
 
   useEffect(() => {
     setSteps(recipe.steps);
