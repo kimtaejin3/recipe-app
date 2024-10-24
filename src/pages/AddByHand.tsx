@@ -23,6 +23,12 @@ const DEFAULT_RCIPE = {
   // spices: [{}],
 };
 
+export type RecipeType = {
+  ingredients: Ingredients[];
+  steps: Step[];
+  spices: Sauce[];
+} & typeof DEFAULT_RCIPE;
+
 export type Ingredients = {
   ingredientName: string;
   ingredientQuantity: string;
