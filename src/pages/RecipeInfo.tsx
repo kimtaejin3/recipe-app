@@ -5,8 +5,9 @@ import Rating from "../assets/rating.svg";
 import { IoIosTime } from "react-icons/io";
 import { IoPeople } from "react-icons/io5";
 import { PiStepsFill } from "react-icons/pi";
+import { RecipeType } from "./AddByHand";
 
-export default function RecipeInfo() {
+export default function RecipeInfo({ recipe }: { recipe: RecipeType }) {
   return (
     <>
       <div className="py-4 flex justify-between">
@@ -21,25 +22,24 @@ export default function RecipeInfo() {
         </button>
       </div>
       <div>
-        <h1 className="text-[20px] font-bold">미역국</h1>
+        <h1 className="text-[20px] font-bold">
+          {recipe && recipe.recipeTitle}
+        </h1>
         <img className="my-2" src={Rating} alt="임시 레이팅" />
       </div>
-      <div>
-        미역국 끓이는 거 어렵지 않습니다! 집에서 쉽게 만들 수 있는 미역국! 가족,
-        친구 생일에 직접 끓여보세요~
-      </div>
+      <div>{recipe && recipe.recipeContent}</div>
       <ul className="mt-8 flex justify-center gap-[15px]">
         <li className="bg-[#EB3830] w-[90px] rounded-md flex flex-col gap-3 items-center py-6 text-white">
           <PiStepsFill size={25} />
-          <span>쉬움</span>
+          <span>{recipe && recipe.recipeDifficulty}</span>
         </li>
         <li className="bg-[#EB3830] w-[90px] rounded-md flex flex-col gap-3 items-center py-6 text-white">
           <IoIosTime size={25} />
-          <span>1시간 이내</span>
+          <span>{recipe && recipe.recipeTime}</span>
         </li>
         <li className="bg-[#EB3830] w-[90px] rounded-md flex flex-col gap-3 items-center py-6 text-white">
           <IoPeople size={25} />
-          <span>2인분</span>
+          <span>{recipe && recipe.recipeAmount}</span>
         </li>
       </ul>
 
