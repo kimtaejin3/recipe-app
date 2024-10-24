@@ -22,7 +22,7 @@ export default function RecipeIngredient({ recipe }: { recipe: RecipeType }) {
         <ul className="flex flex-col gap-8">
           {ingredients?.map((ingredient) => (
             <li className="flex justify-between">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4 shrink-0">
                 <FaBasketShopping color={"#ea4e30"} />
                 <span className="text-[17px]">{ingredient.ingredientName}</span>
               </div>
