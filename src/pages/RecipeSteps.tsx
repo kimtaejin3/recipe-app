@@ -1,7 +1,17 @@
+import { useEffect, useState } from "react";
 import MikeIcon from "../assets/mike.svg";
-import stepCover from "../assets/stepCover.png";
+import { RecipeType, Step } from "./AddByHand";
 
-export default function RecipeSteps() {
+export default function RecipeSteps({ recipe }: { recipe: RecipeType }) {
+  const [steps, setSteps] = useState<Step[]>();
+  const [step, setStep] = useState(1);
+  console.log("renderint");
+  console.log("in steps:", steps);
+
+  useEffect(() => {
+    setSteps(recipe.steps);
+  }, [recipe]);
+
   return (
     <>
       <div>
@@ -13,18 +23,26 @@ export default function RecipeSteps() {
             </button>
           </div>
           <ul className="flex gap-3 mt-1">
-            {new Array(6).fill(0).map((el, i) => (
-              <li className="bg-[#E4F0F2] w-5 h-5 flex items-center justify-center text-[12px] rounded-full">
-                {el + i + 1}
+            {steps?.map((el) => (
+              <li
+                className={`bg-[#E4F0F2] w-5 h-5 flex items-center justify-center text-[12px] rounded-full cursor-pointer ${
+                  el.stepOrder == step && "bg-[#ea4e30] text-white"
+                }`}
+                onClick={() => setStep(el.stepOrder)}
+              >
+                {el.stepOrder}
               </li>
             ))}
           </ul>
         </div>
 
         <div>
-          <p>미역은 물에 불려 준비한다.</p>
+          <p>{steps && steps[step].stepContent}</p>
           <div className="w-[300px] my-11 h-[190px] bg-red-50 mt-4 ">
-            <img className="w-full h-full object-cover" src={stepCover} />
+            <img
+              className="w-full h-full object-cover"
+              src={steps && steps[step].stepImage}
+            />
           </div>
         </div>
 
