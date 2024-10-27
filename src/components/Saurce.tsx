@@ -2,13 +2,17 @@ import { useState } from "react";
 import { Sauce } from "../pages/AddByHand";
 
 export default function Saurce({
+  init_quantity,
+  init_name,
   onSetSauce,
 }: {
   onSetSauce: React.Dispatch<React.SetStateAction<Sauce[]>>;
+  init_name?: string;
+  init_quantity?: string;
 }) {
   const [isClicked, setIsClicked] = useState(false);
-  const [name, setName] = useState("");
-  const [quantity, setQuantity] = useState("");
+  const [name, setName] = useState(init_name ? init_name : "");
+  const [quantity, setQuantity] = useState(init_quantity ? init_quantity : "");
 
   return (
     <>
@@ -16,6 +20,7 @@ export default function Saurce({
         className="w-full p-2 rounded-md mt-2 border-none outline-none focus:outline-[#f2766f] transition-all duration-300"
         type="text"
         disabled={isClicked}
+        defaultValue={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="양념이름"
       />
@@ -24,6 +29,7 @@ export default function Saurce({
           className="w-full p-2 rounded-md mt-2 border-none outline-none focus:outline-[#f2766f] transition-all duration-300"
           type="text"
           disabled={isClicked}
+          defaultValue={quantity}
           onChange={(e) => setQuantity(e.target.value)}
           placeholder="예) 2 (큰술)"
         />

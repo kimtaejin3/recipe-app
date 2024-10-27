@@ -115,7 +115,7 @@ export default function AddByWebsite() {
       recipeTip: res.recipeTip,
       categoryId: res.categoryId,
     }));
-
+    console.log("ingredients:", res.ingredients);
     setIngredients([...res.ingredients]);
     setRecipeSteps(
       res.steps.map((step, index) => ({
@@ -328,7 +328,7 @@ export default function AddByWebsite() {
               재료가 남거나 부족하지 않도록 정확한 계량정보를 적어주세요.
             </p>
           </div>
-          {recipe?.ingredients.map((ingredient, index) => (
+          {ingredients?.map((ingredient, index) => (
             <div
               className={`mt-4 pb-2 ${
                 ingredientCount > 1 &&
@@ -373,13 +373,17 @@ export default function AddByWebsite() {
               너무 달거나 짜지 않도록 정확한 양을 입력해주세요!
             </p>
           </div>
-          {new Array(saurceCount).fill(0).map((_, index) => (
+          {sauces.map((sauce, index) => (
             <div
               className={`mt-4 pb-2 ${
                 saurceCount > 1 && index != saurceCount - 1 && "border-b-2 pb-5"
               }`}
             >
-              <Saurce onSetSauce={setSauces} />
+              <Saurce
+                init_name={sauce.spiceName}
+                init_quantity={sauce.spiceQuantity}
+                onSetSauce={setSauces}
+              />
             </div>
           ))}
           <div className="flex gap-2">
@@ -412,7 +416,7 @@ export default function AddByWebsite() {
               요리의 맛이 좌우될 수 있는 중요한 부분은 빠짐없이 적어주세요.
             </p>
           </div>
-          {recipe?.steps.map((step, index) => {
+          {recipeSteps.map((step, index) => {
             return (
               <Recipe
                 init_content={step.stepContent}

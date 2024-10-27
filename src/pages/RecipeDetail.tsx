@@ -4,12 +4,14 @@ import { useCallback, useEffect, useState } from "react";
 import RecipeInfo from "./RecipeInfo";
 import RecipeIngredient from "./RecipeIngredient";
 import RecipeSteps from "./RecipeSteps";
+import { useParams } from "react-router-dom";
 
 export default function Recipe() {
   const [recipe, setRecipe] = useState({} as RecipeType);
   const [page, setPage] = useState<"info" | "ingredient" | "step">("info");
   const recognition = new window.webkitSpeechRecognition();
   // const [voice, setVoice] = useState("");
+  const { id } = useParams();
 
   const prevClick = () => {
     setPage((prevPage) => {
@@ -77,7 +79,7 @@ export default function Recipe() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`/api/recipe/manual/${27}`, {
+      const res = await fetch(`/api/recipe/manual/${id}`, {
         headers: {
           "Content-Type": "application/json",
         },
