@@ -8,6 +8,36 @@ import RecipeSteps from "./RecipeSteps";
 export default function Recipe() {
   const [recipe, setRecipe] = useState({} as RecipeType);
   const [page, setPage] = useState<"info" | "ingredient" | "step">("info");
+  const recognition = new window.webkitSpeechRecognition();
+  recognition.onresult = function (event) {
+    console.log("onresult", event);
+
+    let finalTranscript = "";
+    let interimTranscript = "";
+    if (typeof event.results === "undefined") {
+      recognition.onend = null;
+      recognition.stop();
+      return;
+    }
+
+    for (let i = event.resultIndex; i < event.results.length; ++i) {
+      const transcript = event.results[i][0].transcript;
+      if (event.results[i].isFinal) {
+        finalTranscript += transcript;
+      } else {
+        interimTranscript += transcript;
+      }
+    }
+
+    console.log("finalTranscript", finalTranscript);
+    console.log("interimTranscript", interimTranscript);
+    // fireCommand(interimTranscript);
+  };
+
+  recognition.onend = function () {
+    console.log("한 뭉탱이 인식이 끝났습니다.");
+    recognition.start();
+  };
 
   useEffect(() => {
     (async () => {
@@ -45,7 +75,13 @@ export default function Recipe() {
         {page === "ingredient" && <RecipeIngredient recipe={recipe} />}
         {page === "step" && <RecipeSteps recipe={recipe} />}
       </div>
-
+      <button
+        onClick={() => {
+          recognition.start();
+        }}
+      >
+        임시마이크
+      </button>
       <div className="mt-[50px] flex items-center justify-center gap-4">
         {page !== "info" && (
           <button
