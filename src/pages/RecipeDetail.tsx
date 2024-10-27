@@ -9,9 +9,25 @@ export default function Recipe() {
   const [recipe, setRecipe] = useState({} as RecipeType);
   const [page, setPage] = useState<"info" | "ingredient" | "step">("info");
   const recognition = new window.webkitSpeechRecognition();
-  recognition.onresult = function (event) {
-    console.log("onresult", event);
+  const [voice, setVoice] = useState("");
+  console.log("voic:", voice);
+  const prevClick = () => {
+    if (page === "ingredient") {
+      setPage("info");
+    } else if (page === "step") {
+      setPage("ingredient");
+    }
+  };
 
+  const nextClick = () => {
+    if (page === "info") {
+      setPage("ingredient");
+    } else if (page === "ingredient") {
+      setPage("step");
+    }
+  };
+
+  recognition.onresult = function (event) {
     let finalTranscript = "";
     let interimTranscript = "";
     if (typeof event.results === "undefined") {
@@ -29,13 +45,13 @@ export default function Recipe() {
       }
     }
 
+    setVoice(finalTranscript);
     console.log("finalTranscript", finalTranscript);
     console.log("interimTranscript", interimTranscript);
     // fireCommand(interimTranscript);
   };
 
   recognition.onend = function () {
-    console.log("한 뭉탱이 인식이 끝났습니다.");
     recognition.start();
   };
 
@@ -86,13 +102,7 @@ export default function Recipe() {
         {page !== "info" && (
           <button
             className="border-[#EB4F30] border-2 border-solid rounded-[20px] py-2 px-[50px]"
-            onClick={() => {
-              if (page === "ingredient") {
-                setPage("info");
-              } else if (page === "step") {
-                setPage("ingredient");
-              }
-            }}
+            onClick={prevClick}
           >
             이전단계
           </button>
@@ -100,13 +110,7 @@ export default function Recipe() {
         {page !== "step" && (
           <button
             className="bg-[#EB4F30] rounded-[20px] py-2 px-[50px] text-white"
-            onClick={() => {
-              if (page === "info") {
-                setPage("ingredient");
-              } else if (page === "ingredient") {
-                setPage("step");
-              }
-            }}
+            onClick={nextClick}
           >
             다음단계
           </button>
