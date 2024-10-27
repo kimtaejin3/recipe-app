@@ -1,6 +1,6 @@
 import { GrFormPrevious } from "react-icons/gr";
 import { RecipeType } from "./AddByHand";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import RecipeInfo from "./RecipeInfo";
 import RecipeIngredient from "./RecipeIngredient";
 import RecipeSteps from "./RecipeSteps";
@@ -9,51 +9,71 @@ export default function Recipe() {
   const [recipe, setRecipe] = useState({} as RecipeType);
   const [page, setPage] = useState<"info" | "ingredient" | "step">("info");
   const recognition = new window.webkitSpeechRecognition();
-  const [voice, setVoice] = useState("");
-  console.log("voic:", voice);
+  // const [voice, setVoice] = useState("");
+
   const prevClick = () => {
-    if (page === "ingredient") {
-      setPage("info");
-    } else if (page === "step") {
-      setPage("ingredient");
-    }
+    setPage((prevPage) => {
+      if (prevPage === "ingredient") {
+        return "info";
+      } else if (prevPage === "step") {
+        return "ingredient";
+      }
+
+      return prevPage;
+    });
   };
 
   const nextClick = () => {
-    if (page === "info") {
-      setPage("ingredient");
-    } else if (page === "ingredient") {
-      setPage("step");
-    }
-  };
-
-  recognition.onresult = function (event) {
-    let finalTranscript = "";
-    let interimTranscript = "";
-    if (typeof event.results === "undefined") {
-      recognition.onend = null;
-      recognition.stop();
-      return;
-    }
-
-    for (let i = event.resultIndex; i < event.results.length; ++i) {
-      const transcript = event.results[i][0].transcript;
-      if (event.results[i].isFinal) {
-        finalTranscript += transcript;
-      } else {
-        interimTranscript += transcript;
+    setPage((prevPage) => {
+      if (prevPage === "info") {
+        return "ingredient";
+      } else if (prevPage === "ingredient") {
+        return "step";
       }
-    }
-
-    setVoice(finalTranscript);
-    console.log("finalTranscript", finalTranscript);
-    console.log("interimTranscript", interimTranscript);
-    // fireCommand(interimTranscript);
+      return prevPage;
+    });
   };
 
-  recognition.onend = function () {
+  const onResult = useCallback(
+    (event: SpeechRecognitionEvent) => {
+      console.log("call");
+      let finalTranscript = "";
+      let interimTranscript = "";
+      if (typeof event.results === "undefined") {
+        recognition.onend = null;
+        recognition.stop();
+        return;
+      }
+
+      for (let i = event.resultIndex; i < event.results.length; ++i) {
+        const transcript = event.results[i][0].transcript;
+        if (event.results[i].isFinal) {
+          finalTranscript += transcript;
+        } else {
+          interimTranscript += transcript;
+        }
+      }
+
+      if (finalTranscript.includes("다음")) {
+        nextClick();
+      }
+
+      console.log("finalTranscript", finalTranscript);
+      console.log("interimTranscript", interimTranscript);
+      // fireCommand(interimTranscript);
+    },
+    [page]
+  );
+
+  recognition.onresult = onResult;
+
+  const onEnd = () => {
+    console.log("end");
+    // console.log(event);
     recognition.start();
   };
+
+  recognition.onend = onEnd;
 
   useEffect(() => {
     (async () => {
