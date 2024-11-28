@@ -58,6 +58,8 @@ export default function Recipe() {
 
       if (finalTranscript.includes("다음")) {
         nextClick();
+      } else if (finalTranscript.includes("이전")) {
+        prevClick();
       }
 
       console.log("finalTranscript", finalTranscript);

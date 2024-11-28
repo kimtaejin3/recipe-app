@@ -20,10 +20,10 @@ export default function RecipeSteps({ recipe }: { recipe: RecipeType }) {
               <img src={MikeIcon} alt="mike_icon" />
             </button>
           </div>
-          <ul className="flex gap-3 mt-1">
+          <ul className="flex gap-3 flex-wrap mt-4">
             {steps?.map((el) => (
               <li
-                className={`bg-[#E4F0F2] w-5 h-5 flex items-center justify-center text-[12px] rounded-full cursor-pointer ${
+                className={` flex-shrink-0 bg-[#E4F0F2] w-5 h-5 flex items-center justify-center text-[12px] rounded-full cursor-pointer ${
                   el.stepOrder - 1 == step && "bg-[#ea4e30] text-white"
                 }`}
                 onClick={() => setStep(el.stepOrder - 1)}
