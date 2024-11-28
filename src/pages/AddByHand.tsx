@@ -24,6 +24,7 @@ const DEFAULT_RCIPE = {
 };
 
 export type RecipeType = {
+  recipeId: string;
   ingredients: Ingredients[];
   steps: Step[];
   spices: Sauce[];

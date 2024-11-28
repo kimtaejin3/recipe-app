@@ -303,13 +303,13 @@ export default function AddByWebsite() {
               onChange={(e) => {
                 if (e.target.value === "한식") {
                   console.log(1);
-                  handleChange("categoryId", "1");
+                  handleChange("categoryId", "3");
                 } else if (e.target.value === "중식") {
                   console.log(2);
                   handleChange("categoryId", "2");
                 } else {
                   console.log(3);
-                  handleChange("categoryId", "3");
+                  handleChange("categoryId", "1");
                 }
               }}
               className="w-full p-2 outline-none rounded-md focus:outline-[#f2766f] transition-all duration-300"

@@ -10,6 +10,8 @@ export default function Recipe() {
   const [recipe, setRecipe] = useState({} as RecipeType);
   const [page, setPage] = useState<"info" | "ingredient" | "step">("info");
   const recognition = new window.webkitSpeechRecognition();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   // const [voice, setVoice] = useState("");
   const { id } = useParams();
 
@@ -81,16 +83,37 @@ export default function Recipe() {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`/api/recipe/manual/${id}`, {
-        headers: {
+
+      try {
+        setLoading(true);
+        const res = await fetch(`/api/recipe/manual/${id}`, {
+          headers: {
           "Content-Type": "application/json",
         },
       });
 
-      const { recipe } = await (res.json() as Promise<{ recipe: RecipeType }>);
-      setRecipe({ ...recipe });
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`);
+      }
+
+        const { recipe } = await (res.json() as Promise<{ recipe: RecipeType }>);
+        setRecipe({ ...recipe });
+      } catch (error) {
+        console.log(error);
+        setError("레시피 정보를 불러오는데 실패했습니다.");
+      } finally {
+        setLoading(false);
+      }
     })();
   }, []);
+
+  if (loading) {
+    return <div>레시피 정보 로딩중...</div>;
+  }
+  if (error) {
+    console.log('asdfoijoweij');
+    return <div>레시피 정보가 없습니다...</div>;
+  }
 
   return (
     <div className="pb-10">
