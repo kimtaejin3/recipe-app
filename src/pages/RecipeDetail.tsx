@@ -111,17 +111,11 @@ export default function Recipe() {
         </div>
       </div>
       <div className="bg-[#F7F9FC] rounded-t-[20px] relative z-10 -top-7 px-5">
-        {page === "info" && <RecipeInfo recipe={recipe} />}
-        {page === "ingredient" && <RecipeIngredient recipe={recipe} />}
-        {page === "step" && <RecipeSteps recipe={recipe} />}
+        {page === "info" && <RecipeInfo handler={() => {recognition.start()}} recipe={recipe} />}
+        {page === "ingredient" && <RecipeIngredient handler={() => {recognition.start()}} recipe={recipe} />}
+        {page === "step" && <RecipeSteps handler={() => {recognition.start()}} recipe={recipe} />}
       </div>
-      <button
-        onClick={() => {
-          recognition.start();
-        }}
-      >
-        임시마이크
-      </button>
+     
       <div className="mt-[50px] flex items-center justify-center gap-4">
         {page !== "info" && (
           <button

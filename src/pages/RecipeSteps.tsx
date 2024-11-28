@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import MikeIcon from "../assets/mike.svg";
 import { RecipeType, Step } from "./AddByHand";
 
-export default function RecipeSteps({ recipe }: { recipe: RecipeType }) {
+export default function RecipeSteps({ recipe, handler }: { recipe: RecipeType, handler: () => void }) {
   const [steps, setSteps] = useState<Step[]>();
   const [step, setStep] = useState(0);
 
@@ -16,7 +16,7 @@ export default function RecipeSteps({ recipe }: { recipe: RecipeType }) {
         <div className="py-4 pb-8 ">
           <div className="flex justify-between items-center">
             <h1 className=" text-center font-bold text-[18px]">순서</h1>
-            <button>
+            <button onClick={handler}>
               <img src={MikeIcon} alt="mike_icon" />
             </button>
           </div>

@@ -3,7 +3,7 @@ import MikeIcon from "../assets/mike.svg";
 import { Ingredients, RecipeType } from "./AddByHand";
 import { useEffect, useState } from "react";
 
-export default function RecipeIngredient({ recipe }: { recipe: RecipeType }) {
+export default function RecipeIngredient({ recipe, handler }: { recipe: RecipeType, handler: () => void }) {
   const [ingredients, setIngredients] = useState<Ingredients[]>();
 
   useEffect(() => {
@@ -15,7 +15,7 @@ export default function RecipeIngredient({ recipe }: { recipe: RecipeType }) {
       <div>
         <div className="py-4 pb-8 flex justify-between items-center">
           <h1 className=" text-center font-bold text-[18px]">재료</h1>
-          <button>
+          <button onClick={handler}>
             <img src={MikeIcon} alt="mike_icon" />
           </button>
         </div>

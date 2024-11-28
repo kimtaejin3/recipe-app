@@ -7,7 +7,7 @@ import { IoPeople } from "react-icons/io5";
 import { PiStepsFill } from "react-icons/pi";
 import { RecipeType } from "./AddByHand";
 
-export default function RecipeInfo({ recipe }: { recipe: RecipeType }) {
+export default function RecipeInfo({ recipe, handler }: { recipe: RecipeType, handler: () => void }) {
   return (
     <>
       <div className="py-4 flex justify-between">
@@ -17,7 +17,9 @@ export default function RecipeInfo({ recipe }: { recipe: RecipeType }) {
             국/탕
           </span>
         </div>
-        <button>
+        <button
+         onClick={handler}
+        >
           <img src={MikeIcon} alt="mike_icon" />
         </button>
       </div>
