@@ -41,8 +41,8 @@ export default function Recipes() {
       <h1 className="text-2xl font-bold text-center py-4 text-[#ea4e30]">tastylog</h1>
       <div className="flex justify-center my-4">
         <button
-          className={`px-4 py-2 mx-2 ${category === 1 ? 'bg-red-400 text-white' : 'bg-gray-200'}`}
-          onClick={() => setCategory(1)}
+          className={`px-4 py-2 mx-2 ${category === 3 ? 'bg-red-400 text-white' : 'bg-gray-200'}`}
+          onClick={() => setCategory(3)}
         >
           한식
         </button>
@@ -53,8 +53,8 @@ export default function Recipes() {
           중식
         </button>
         <button
-          className={`px-4 py-2 mx-2 ${category === 3 ? 'bg-red-400 text-white' : 'bg-gray-200'}`}
-          onClick={() => setCategory(3)}
+          className={`px-4 py-2 mx-2 ${category === 1  ? 'bg-red-400 text-white' : 'bg-gray-200'}`}
+          onClick={() => setCategory(1)}
         >
           양식
         </button>

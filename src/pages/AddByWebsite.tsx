@@ -4,6 +4,7 @@ import { FaCameraRetro } from "react-icons/fa";
 import Ingredient from "../components/Ingredient";
 import Saurce from "../components/Saurce";
 import Recipe from "../components/Recipe";
+import { useNavigate } from "react-router-dom";
 
 type Ingredient = {
   ingredientName: string;
@@ -34,6 +35,8 @@ export default function AddByWebsite() {
   const [ingredients, setIngredients] = useState<Ingredients[]>([]);
   const [sauces, setSauces] = useState<Sauce[]>([]);
   const [recipeSteps, setRecipeSteps] = useState<Step[]>([]);
+
+  const navigate = useNavigate();
 
   // const [preview, setPreview] = useState("");
 
@@ -71,6 +74,8 @@ export default function AddByWebsite() {
           url: "",
         }),
       });
+      console.log("레시피 저장 완료");
+      navigate("/");
     } catch (e) {
       console.log(e);
     }
