@@ -15,7 +15,7 @@ export default function Home() {
       <div className="flex flex-col justify-center gap-10 mt-14 items-center">
         <button>
           <Link
-            to="/"
+            to="/add-by-youtube"
             className="w-[181px] h-[15vh] border-2 border-[#EB3830] rounded-[20px] bg-white flex items-center justify-center"
           >
             <span>Youtube로 가져오기</span>
