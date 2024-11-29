@@ -18,7 +18,7 @@ function RecipeCard({ image, title, description, id }: { image: string, title: s
 
 export default function Recipes() {
   const [recipes, setRecipes] = useState<RecipeType[]>([]);
-  const [category, setCategory] = useState<number>(1);
+  const [category, setCategory] = useState<number>(3);
 
   useEffect(() => {
     const fetchRecipes = async () => {
