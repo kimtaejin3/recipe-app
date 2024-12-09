@@ -2,13 +2,33 @@ import { useEffect, useState } from "react";
 import MikeIcon from "../assets/mike.svg";
 import { RecipeType, Step } from "./AddByHand";
 
-export default function RecipeSteps({ recipe, handler }: { recipe: RecipeType, handler: () => void }) {
+export default function RecipeSteps({
+  recipe,
+  handler,
+  next_step = false,
+  prev_step = false,
+}: {
+  recipe: RecipeType;
+  handler: () => void;
+  next_step?: boolean;
+  prev_step?: boolean;
+}) {
   const [steps, setSteps] = useState<Step[]>();
   const [step, setStep] = useState(0);
 
   useEffect(() => {
     setSteps(recipe.steps);
   }, [recipe]);
+
+  useEffect(() => {
+    if (step == steps?.length) return;
+    setStep((state) => state + 1);
+  }, [next_step]);
+
+  useEffect(() => {
+    if (step == 0) return;
+    setStep((state) => state - 1);
+  }, [prev_step]);
 
   return (
     <>

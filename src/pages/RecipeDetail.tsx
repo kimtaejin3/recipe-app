@@ -11,6 +11,8 @@ export default function Recipe() {
   const [page, setPage] = useState<"info" | "ingredient" | "step">("info");
   const recognition = new window.webkitSpeechRecognition();
   const [loading, setLoading] = useState(false);
+  const [nextStep, setNextStep] = useState(false);
+  const [prevStep, setPrevStep] = useState(false);
   const [error, setError] = useState("");
   // const [voice, setVoice] = useState("");
   const { id } = useParams();
@@ -40,7 +42,6 @@ export default function Recipe() {
 
   const onResult = useCallback(
     (event: SpeechRecognitionEvent) => {
-      console.log("call");
       let finalTranscript = "";
       let interimTranscript = "";
       if (typeof event.results === "undefined") {
@@ -59,9 +60,17 @@ export default function Recipe() {
       }
 
       if (finalTranscript.includes("다음")) {
-        nextClick();
+        if (page == "step") {
+          setNextStep((state) => !state);
+        } else {
+          nextClick();
+        }
       } else if (finalTranscript.includes("이전")) {
-        prevClick();
+        if (page == "step") {
+          setPrevStep((state) => !state);
+        } else {
+          prevClick();
+        }
       }
 
       console.log("finalTranscript", finalTranscript);
@@ -83,20 +92,21 @@ export default function Recipe() {
 
   useEffect(() => {
     (async () => {
-
       try {
         setLoading(true);
         const res = await fetch(`/api/recipe/manual/${id}`, {
           headers: {
-          "Content-Type": "application/json",
-        },
-      });
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
 
-        const { recipe } = await (res.json() as Promise<{ recipe: RecipeType }>);
+        const { recipe } = await (res.json() as Promise<{
+          recipe: RecipeType;
+        }>);
         setRecipe({ ...recipe });
       } catch (error) {
         console.log(error);
@@ -111,7 +121,7 @@ export default function Recipe() {
     return <div>레시피 정보 로딩중...</div>;
   }
   if (error) {
-    console.log('asdfoijoweij');
+    console.log("asdfoijoweij");
     return <div>레시피 정보가 없습니다...</div>;
   }
 
@@ -134,11 +144,34 @@ export default function Recipe() {
         </div>
       </div>
       <div className="bg-[#F7F9FC] rounded-t-[20px] relative z-10 -top-7 px-5">
-        {page === "info" && <RecipeInfo handler={() => {recognition.start()}} recipe={recipe} />}
-        {page === "ingredient" && <RecipeIngredient handler={() => {recognition.start()}} recipe={recipe} />}
-        {page === "step" && <RecipeSteps handler={() => {recognition.start()}} recipe={recipe} />}
+        {page === "info" && (
+          <RecipeInfo
+            handler={() => {
+              recognition.start();
+            }}
+            recipe={recipe}
+          />
+        )}
+        {page === "ingredient" && (
+          <RecipeIngredient
+            handler={() => {
+              recognition.start();
+            }}
+            recipe={recipe}
+          />
+        )}
+        {page === "step" && (
+          <RecipeSteps
+            handler={() => {
+              recognition.start();
+            }}
+            next_step={nextStep}
+            prev_step={prevStep}
+            recipe={recipe}
+          />
+        )}
       </div>
-     
+
       <div className="mt-[50px] flex items-center justify-center gap-4">
         {page !== "info" && (
           <button
